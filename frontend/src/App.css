@@ -1,42 +1,111 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container{
+    width: 100vw;
+    background-image: url('./assets/LoginImg.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    font-family: 'Poppins',sans-serif;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.text{
+    overflow: hidden;
+    position: relative;
+    margin: 1px solid red;
+    top: 0;
+    animation: downflow 3s ease forwards;
+    opacity: 0;
 }
 
-.card {
-  padding: 2em;
+@keyframes downflow {
+    from{
+        top: 0;
+        opacity: 0;
+    }
+    to{
+        top: 10%;
+        opacity: 1;
+    }
+    
 }
 
-.read-the-docs {
-  color: #888;
+.type{
+    display: inline-block;
+    transform: translateY(10%);
+    height: 100%;
+}
+
+#text-heading{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    animation: type 1.5s steps(18,end) forwards;
+    animation-delay: 2s;
+}
+
+@keyframes type {
+    from{
+        width: 0;       
+    }
+    to{
+        width: 100%;
+    }
+    
+}
+
+.login-form{
+    background-color: rgb(164, 155, 143,0.75);
+    text-align: center;
+    max-width: 30vw;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    max-height: 40vh;
+}
+form{
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-input,.pass-input{
+    display: flex;
+    gap: 5px;
+}
+
+
+.pass-input input{
+    transform: translateX(3px);
+}
+
+form input{
+    width: 70%;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+input::placeholder{
+    color: rgb(158, 163, 163);
+}
+
+.login-btn{
+    padding: 8px 15px;
+    transform: translateY(1rem);
+    font-family: 'Poppins',sans-serif;
+    color: white;
+    background-color: burlywood;
+    border: none;
+    border-radius: 5px;
 }
