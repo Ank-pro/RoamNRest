@@ -7,7 +7,7 @@ const verifyUser = (req,res,next)=>{
             if(err){
                  return res.status(403).json({message : 'Invalid token'})
             }
-            req.user = user;
+            req.user = user; //making a user in req and storing the user
             next();
         })
     }

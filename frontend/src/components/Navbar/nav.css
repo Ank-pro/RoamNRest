@@ -1,0 +1,71 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 2px;
+    background-color: rgb(248, 246, 246);  
+    box-shadow: 1px 1px 5px rgb(220, 215, 215); 
+    padding: 10px;
+    height: 13vh;
+    align-items: center;
+    font-family: 'Poppins',sans-serif;
+}
+.navlist {
+    display: flex;
+    list-style-type: none;
+    gap: 10px;
+    max-height: 7vh;
+    border-radius: 20px;
+    /* background-color: rgb(249, 240, 240); */
+    box-shadow: 1px 1px 8px rgb(216, 213, 213);
+    align-items: center;
+}
+
+.navlist li {
+    padding: 8px;
+    font-size: 1rem;
+    /* max-height: 7vh;
+    border: 1px solid black; */
+    background-color: transparent;
+}
+
+.navlist img {
+    transform: translate(-25%, 10%);
+    background-color: transparent;
+}
+.navlist span{
+    border-right: 1px solid black;
+    height: 1.5rem;
+    opacity: 0.5;
+}
+
+.heading{
+    background-color: transparent;
+    font-size: 1.25rem;
+    font-weight: 600;
+    transform: translateX(1rem);
+    color: rgb(242, 117, 34);
+}
+.user-section{
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    transform: translateX(-1rem);
+    gap: 1rem;
+}
+.username,.user-icon{
+    background-color: transparent;
+}
+
+.user-icon{
+    height: 6vh;
+    width: 3vw;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.user-icon img{
+    background-color: transparent;
+    height: 100%;
+    filter: drop-shadow(1px 1px 4px rgb(69, 118, 121));
+    width: 100%;
+}

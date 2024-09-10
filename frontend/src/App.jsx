@@ -2,35 +2,28 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 import './App.css'
 import { LoginPage } from './components/LoginPage/LoginPage';
+import NavBar from './components/Navbar/NavBar';
+import { HotelCard } from './components/HotelCard/HotelCard';
 
 
 function App() {
+  const [hotels,setHotels] = useState([]);
 
+  useEffect(()=>{
+    async function getData(){
+      const hotel = await axios.get('http://localhost:5000/api/hotel');
+      console.log(hotel.data);
+      setHotels(hotel.data);
+    }
+    getData();
+  },[])
 
 
   return (
     <>
       <div className="container">
-        {/* <h1 className='text'>RoamNRest</h1> */}
-        {/* <div className="type">
-        <div id='text-heading'>Only for wanderers</div>
-        </div>  */}
-        <div className="login-form">
-          <h1>Login</h1>
-          <form >
-
-            <div className="user-input">
-            <label htmlFor="user">Username</label>
-            <input type="text" className="user" placeholder='Enter username'/>
-            </div>
-
-            <div className="pass-input">
-            <label htmlFor="user">Password</label>
-            <input type="password" className="pass" placeholder='Enter password'/>
-            </div>
-            <button className="login-btn">Login</button>
-          </form>
-        </div>
+        <NavBar/>
+        <HotelCard hotels = {hotels}/>
       </div>
     </>
   )

@@ -1,0 +1,46 @@
+.card{
+    margin-top: 1rem;
+    margin-left: 2rem;
+    height: 22rem;
+    width: 20rem;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgb(196, 192, 192);
+    font-family: 'Poppins',sans-serif;
+    background-color: rgb(251, 251, 251);
+}
+
+.card-img{
+    height: 15rem;
+    border-radius: 5px;
+}
+
+.card-img img{
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.address span{
+    font-size: 14px;
+    opacity: 0.75;
+}
+
+.card-details{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.ratings{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#price{
+    padding: 5px;
+}
+
+#price::before{
+    content: '\20B9';
+}
