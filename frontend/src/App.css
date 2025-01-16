@@ -4,3 +4,14 @@
     box-sizing: border-box;
     
 }
+
+.hotel-container{
+    /* border: 1px solid black; */
+    display: flex;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+    /* row-gap: 1rem; */
+    gap: 1.5rem;
+    justify-content: center;
+    /* align-items: center; */
+}

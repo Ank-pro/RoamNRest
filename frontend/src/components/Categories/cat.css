@@ -1,0 +1,62 @@
+/* section{
+    display: flex; 
+    gap: 1rem;
+    border: 1px solid black;
+    padding-top: 1rem; 
+     padding-left: 2.25rem;
+}  */
+
+/* section img{
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+} */
+
+
+.slider{
+    border: none;
+    color: rgb(18, 18, 18,0.75);
+    background-color: rgb(244, 239, 239);
+    padding: 8px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.slider:hover{
+    background-color: rgb(228, 232, 232);
+}
+
+.category-slider {
+    padding-top: 1rem;
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+  } 
+  
+  .slick-prev, 
+  .slick-next {
+    width: 32px !important;
+    height: 40px !important;
+    z-index: 1;
+  } 
+  
+  .slick-prev:before, 
+  .slick-next:before {
+    display: none;
+  }
+
+  .slick-slide {
+    /* margin: 0 8px;  Create gap between slides */
+    /* margin-left: 1px; */
+    /* border: 1px solid black; */
+    margin-left: 10px;
+  }
+
+  
+  /* .slick-track {
+    display: flex;
+    gap: 1rem;
+  } */
+  
+  /* .slick-list {
+    margin: 0 -10px;
+  } */

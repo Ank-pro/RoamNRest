@@ -4,20 +4,22 @@ const Hotel = require('../model/hotelsSchema');
 const hotels = require('../my-data/data');
 
 
-route.get('/hotel',async (req,res)=>{
-    const category = req.query.category;
-    if(category){
-        let hotelsBasedOnCategory = await Hotel.find({category : category})
-        res.json(hotelsBasedOnCategory);
-        return;
-    }
-   const hotelsList = await Hotel.find();
-   res.json(hotelsList);
-})
+// route.get('/hotel',async (req,res)=>{
+//     const category = req.query.category;
+//     if(category){
+//         let hotelsBasedOnCategory = await Hotel.find({category : category})
+//         res.json(hotelsBasedOnCategory);
+//         return;
+//     }
+//    const hotelsList = await Hotel.find();
+//    res.json(hotelsList);
+// })
 
 route.get('/hotel',async (req,res)=>{
     try {
-        const allHotels = await Hotel.find({});
+        const {page} = req.query;
+        const skip = (page-1)*12;
+        const allHotels = await Hotel.find({}).skip(skip).limit(12);  
         res.status(200).json(allHotels)   
     } catch (error) {
         res.status(404).json({message : 'Couldnt find the hotels'})
