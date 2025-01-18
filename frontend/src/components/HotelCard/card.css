@@ -2,6 +2,7 @@
 .card{
     position: relative;
     margin-top: 1rem;
+    cursor: pointer;
     margin-left: 2rem;
     height: 22rem;
     /* border: 1px solid black; */
@@ -10,6 +11,10 @@
     box-shadow: 1px 1px 5px rgb(196, 192, 192);
     font-family: 'Poppins',sans-serif;
     background-color: rgb(251, 251, 251);
+    transition: transform 0.2s ease-in-out;
+}
+.card:hover{
+    transform: scale(1.05);
 }
 
 .card-img{

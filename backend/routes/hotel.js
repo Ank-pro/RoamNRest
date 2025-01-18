@@ -29,9 +29,7 @@ route.get('/hotel/:id',async(req,res)=>{
     } catch (error) {
         console.log(error);
         res.json({message : 'Couldnt find the hotel'})
-    }
-    
-    
+    }   
 })
 
 route.post('/addHotels',async(req,res)=>{
