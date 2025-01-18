@@ -1,8 +1,10 @@
+
 .card{
     position: relative;
     margin-top: 1rem;
     margin-left: 2rem;
     height: 22rem;
+    /* border: 1px solid black; */
     width: 19rem;
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgb(196, 192, 192);

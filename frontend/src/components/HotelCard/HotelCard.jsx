@@ -2,9 +2,9 @@ import "./card.css";
 import starImg from "../../assets/star.svg";
 
 export const HotelCard = ({ hotel }) => {
-    if(hotel.length === 0){
-        return <p>Loading...</p>
-    }
+  if (hotel.length === 0) {
+    return <p>Loading...</p>;
+  }
   return (
     <div className="card">
       <div className="card-img">

@@ -5,65 +5,37 @@ import { LoginPage } from "./components/LoginPage/LoginPage";
 import NavBar from "./components/Navbar/NavBar";
 import { HotelCard } from "./components/HotelCard/HotelCard";
 import { Categories } from "./components/Categories/Categories";
+import { useSelector } from "react-redux";
 
 function App() {
   const [hotels, setHotels] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
 
-  const fetchData = useCallback(async () => {
-    if (loading || !hasMore) return;
-    setLoading(true);
+  const selectedCategory = useSelector(
+    (state) => state.category.selectedCategory
+  );
+  const fetchData =  async()=>{
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/hotel?page=${page}`
-      );
-      if (response.data.length > 0) {
-        setHotels((prev) => [...prev, ...response.data]);
-        setPage((prevPage) => prevPage + 1);
-      } else {
-        setHasMore(false);
-      }
+      const {data} = await axios.get(`http://localhost:5000/api/hotel${selectedCategory ? `?category=${selectedCategory}` : ''}`);
+      setHotels(data)
     } catch (error) {
-      console.log(error);
-      setHasMore(false);
-    } finally {
-      setLoading(false);
+      console.log('Error :',error)
     }
-  }, [page, loading, hasMore]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!hasMore) return;
-      const { scrollTop, clientHeight, scrollHeight } =
-        document.documentElement;
-
-      if (scrollTop + clientHeight >= scrollHeight - 20) {
-        fetchData();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [fetchData, hasMore]);
+  }
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <>
       <div className="container">
         <NavBar />
-        <Categories/>
+        <Categories />
         <main className="hotel-container">
-          {hotels.map((hotel) => (
+          {hotels && hotels.map((hotel) => (
             <HotelCard hotel={hotel} key={hotel._id} />
           ))}
         </main>
-        {loading && <p>Loading...</p>}
-        {!hasMore && <p>No more hotels to load.</p>}
       </div>
     </>
   );

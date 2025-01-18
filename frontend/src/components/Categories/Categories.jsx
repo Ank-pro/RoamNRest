@@ -5,9 +5,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import sliderImg from "../../assets/rightArrow.svg";
+import {useDispatch} from 'react-redux'
+import { onSelectCategory } from "../../features/categorySlice";
 
 export const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
 
   const getCategories = async () => {
     const { data } = await axios.get(`http://localhost:5000/api/category`);
@@ -17,6 +20,11 @@ export const Categories = () => {
   useEffect(() => {
     getCategories();
   }, []);
+
+  const handleCategorySelect = (category)=>{
+    dispatch(onSelectCategory(category));
+    // console.log(category)
+  }
 
   const settings = {
     dots: false,
@@ -33,7 +41,7 @@ export const Categories = () => {
     <div className="category-slider">
       <Slider {...settings}>
         {categories.map((cat) => (
-          <div className="slider" key={cat._id}>
+          <div className="slider" key={cat._id} onClick={()=>handleCategorySelect(cat.category)}>
             {cat.category}
           </div>
         ))}
