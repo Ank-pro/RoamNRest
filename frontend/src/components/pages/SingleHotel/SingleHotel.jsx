@@ -1,11 +1,42 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import './singleHotel.css'
+import NavBar from "../../Navbar/NavBar";
+import { HotelImages } from "../../HotelImages/HotelImages";
+import { HotelDetails } from "../../HotelDetails/HotelDetails";
 
 export const SingleHotel = () => {
+  const { id } = useParams();
+  const [singleHotel, setSingleHotel] = useState(null);
 
-    const params = useParams();
-    console.log(params)
+  async function fetchHotel() {
+    try {
+      const { data } = await axios.get(`http://localhost:5000/api/hotel/${id}`);
+      console.log(data);
+      setSingleHotel(data);
+    } catch (error) {
+      console.log("Cant find the hotel", error);
+    }
+  }
 
-  return <>2025 is your year, you dont know how much you are going to achieve in this year, Keep believing</>;
+  useEffect(() => {
+    fetchHotel();
+  }, [id]);
+
+  if (!singleHotel) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <>
+      <NavBar />
+      <main className="single-hotel">
+        <HotelImages singleHotel={singleHotel} />
+        <div className="hotel-details">
+          <HotelDetails singleHotel={singleHotel} />
+        </div>
+      </main>
+    </>
+  );
 };

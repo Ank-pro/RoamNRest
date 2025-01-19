@@ -80,7 +80,7 @@ const hotels = {
         },
         {
             id: uuid(),
-            name: "StayVista @ Vista Divine",
+            name: "StayVista Vista Divine",
             category: "National Parks",
             image: "https://a0.muscache.com/im/pictures/miso/Hosting-46781700/original/2b25b21b-87d4-48c9-b796-c2cd04af2788.jpeg?im_w=1200",
             imageArr: ["https://a0.muscache.com/im/pictures/miso/Hosting-46781700/original/76c122b8-e7ab-4933-a5ba-cfc86f949db5.jpeg?im_w=720", "https://a0.muscache.com/im/pictures/miso/Hosting-46781700/original/1eaf860f-053d-46d9-9ee9-c7a603473ed0.jpeg?im_w=720", "https://a0.muscache.com/im/pictures/miso/Hosting-46781700/original/57c1ca9f-8a11-4453-a15a-d6f0a257931c.jpeg?im_w=720", "https://a0.muscache.com/im/pictures/miso/Hosting-46781700/original/eaf3779d-7978-4850-909b-c7a6ae6d15d8.jpeg?im_w=720"],
@@ -157,7 +157,7 @@ const hotels = {
         // from here
         {
             id: uuid(),
-            name: "Folktales ; a Boutique Homestay & Artist Retreat#",
+            name: "Folktales a Boutique Homestay & Artist Retreat",
             category: "National Parks",
             image: "https://a0.muscache.com/im/pictures/cfdf5973-9fc1-42d3-bde1-a072fdbe1825.jpg?im_w=1200",
             imageArr: ["https://a0.muscache.com/im/pictures/c7ecaa29-a2a6-4e50-8dd5-a4719096fb4b.jpg?im_w=720", "https://a0.muscache.com/im/pictures/d9f4455c-f29b-4068-81b8-c05957239930.jpg?im_w=720", "https://a0.muscache.com/im/pictures/eba3d6d8-8b5b-43a0-b1d4-05a4bb1c578b.jpg?im_w=720", "https://a0.muscache.com/im/pictures/941cc6e4-4178-489b-b92c-1df3af7a3464.jpg?im_w=720"],
@@ -232,7 +232,7 @@ const hotels = {
         },
         {
             id: uuid(),
-            name: "Corona Safe: Avondale - Beautiful Heritage Home",
+            name: "Corona Safe Avondale - Beautiful Heritage Home",
             category: "National Parks",
             image: "https://a0.muscache.com/im/pictures/7ef7f41b-62e2-43c1-b68f-8cd23e954167.jpg?im_w=1200",
             imageArr: ["https://a0.muscache.com/im/pictures/062b4382-2379-4858-a750-a13f8baac367.jpg?im_w=720", "https://a0.muscache.com/im/pictures/7fae41d2-161c-4713-a8f3-c951f0f3b479.jpg?im_w=720", "https://a0.muscache.com/im/pictures/e33cf17f-8324-482c-a2dc-13db163e28d8.jpg?im_w=720", "https://a0.muscache.com/im/pictures/f2e679c9-f051-4e2b-830b-212be491e530.jpg?im_w=720"],

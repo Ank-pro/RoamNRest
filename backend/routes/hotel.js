@@ -25,6 +25,7 @@ route.get('/hotel/:id',async(req,res)=>{
     try {
         const {id} = req.params;
         const hotelById = await Hotel.findById(id);
+        console.log(hotelById)
         res.json(hotelById);       
     } catch (error) {
         console.log(error);
@@ -34,11 +35,12 @@ route.get('/hotel/:id',async(req,res)=>{
 
 route.post('/addHotels',async(req,res)=>{
     try {
-        await Hotel.deleteMany();
+        // await Hotel.deleteMany();
         const hotelsDataInDB = await Hotel.insertMany(hotels.data);
+        
         res.json(hotelsDataInDB)
     } catch (error) {
-        console.log(error)
+        console.error("Error inserting hotels:", error);
         res.json({message : 'Cannot insert in the DB'})
     }
     
