@@ -5,6 +5,7 @@ import './singleHotel.css'
 import NavBar from "../../Navbar/NavBar";
 import { HotelImages } from "../../HotelImages/HotelImages";
 import { HotelDetails } from "../../HotelDetails/HotelDetails";
+import { HotelPrice } from "../../HotelPrice/HotelPrice";
 
 export const SingleHotel = () => {
   const { id } = useParams();
@@ -35,6 +36,7 @@ export const SingleHotel = () => {
         <HotelImages singleHotel={singleHotel} />
         <div className="hotel-details">
           <HotelDetails singleHotel={singleHotel} />
+          <HotelPrice singleHotel={singleHotel}/>
         </div>
       </main>
     </>
