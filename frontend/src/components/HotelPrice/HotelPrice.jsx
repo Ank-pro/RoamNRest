@@ -22,6 +22,7 @@ export const HotelPrice = ({ singleHotel }) => {
             <span>Check-in</span>
           <DatePicker
             selected={selectedDate}
+            closeOnScroll = {true}
             onChange={(date) => setSelectedDate(date)}
             dateFormat="dd/MM/yyyy"
             className="date-input"
@@ -32,6 +33,7 @@ export const HotelPrice = ({ singleHotel }) => {
             <span>Check-out</span>
           <DatePicker
             selected={new Date()}
+            closeOnScroll = {true}
             onChange={(date) => console.log(date)}
             dateFormat="dd/MM/yyyy"
             className="date-input"

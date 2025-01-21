@@ -12,12 +12,17 @@
 .navlist {
     display: flex;
     list-style-type: none;
+    cursor: pointer;
     gap: 10px;
-    max-height: 7vh;
+    padding: 0.25rem;
     border-radius: 20px;
     /* background-color: rgb(249, 240, 240); */
     box-shadow: 1px 1px 8px rgb(216, 213, 213);
     align-items: center;
+}
+
+.navlist:hover{
+    box-shadow: 2px 2px 10px 2px rgb(216, 213, 213);
 }
 
 .navlist li {
@@ -68,4 +73,40 @@
     height: 100%;
     filter: drop-shadow(1px 1px 4px rgb(69, 118, 121));
     width: 100%;
+}
+
+
+
+/* modal */
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 998;
+}
+
+.search-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(248, 246, 246);
+    padding: 20px;
+    z-index: 999;
+    animation: slideDown 0.3s ease-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
