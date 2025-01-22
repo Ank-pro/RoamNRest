@@ -5,27 +5,34 @@ import searchImg from "../../assets/search.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setDates, setDestination } from "../../features/searchBarSlice";
 import { useEffect, useState } from "react";
-import { GuestSelect } from "./GuestSelect";
+import { GuestSelect } from "./guest-select/GuestSelect";
 
 export const SearchComponent = () => {
   const dispatch = useDispatch();
-  const { destination, checkInDate, checkOutDate,guest } = useSelector(
+  const { destination, checkInDate, checkOutDate, guest : {adults,childrens,pets} } = useSelector(
     (state) => state.search
   );
 
   const checkInDateObj = checkInDate ? new Date(checkInDate) : null;
   const checkOutDateObj = checkOutDate ? new Date(checkOutDate) : null;
+  const totalPets = pets > 0 ? `, ${pets} ${pets === 1 ? 'pet' : 'pets'}` : '';
+  const totalChilds = childrens > 0 ?  `, ${childrens} ${childrens === 1 ? 'child' : 'childs'}` : '';
+  const totalGuests = `${adults} ${adults === 1 ? `adult`: `adults`}${totalChilds}${totalPets}`;
 
-  useEffect(()=>{
-    console.log(checkInDateObj)
-  },[checkInDate])
+  useEffect(() => {
+    console.log(checkInDateObj);
+  }, [checkInDate]);
 
-  function handleInDate(date){
-    dispatch(setDates({checkin : date, checkout : checkOutDateObj}))
+  function handleInDate(date) {
+    dispatch(setDates({ checkin: date, checkout: checkOutDateObj }));
   }
 
-  function handleOutDate(date){
-    dispatch(setDates({checkin : checkInDateObj, checkout : date}))
+  function handleOutDate(date) {
+    dispatch(setDates({ checkin: checkInDateObj, checkout: date }));
+  }
+
+  function handleDestination(e){
+    dispatch(setDestination(e.target.value))
   }
 
   return (
@@ -37,7 +44,7 @@ export const SearchComponent = () => {
             type="text"
             placeholder="Destination"
             value={destination}
-            onChange={(e) => dispatch(setDestination(e.target.value))}
+            onChange={handleDestination}
           />
         </div>
       </div>
@@ -71,8 +78,12 @@ export const SearchComponent = () => {
       <div className="total-guest">
         <div className="place">
           <label>No. of Guests</label>
-          <input type="text" id="guest-input" placeholder="Add guests" value={guest}/>
-
+          <input
+            type="text"
+            id="guest-input"
+            placeholder="Add guests"
+            value={totalGuests}
+          />
         </div>
         <div className="search-img">
           <img src={searchImg} alt="search" />

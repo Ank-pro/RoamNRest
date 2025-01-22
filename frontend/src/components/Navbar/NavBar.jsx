@@ -3,7 +3,8 @@ import "./nav.css";
 import searchImg from '../../assets/search.svg';
 import userImg from '../../assets/user.svg';
 import {SearchComponent} from '../SearchComponent/SearchComponent'
-import { GuestSelect } from "../SearchComponent/GuestSelect";
+import { GuestSelect } from "../SearchComponent/guest-select/GuestSelect";
+import { DestinationSelect } from "../SearchComponent/dest-select/DestinationSelect";
 
 export default function NavBar() {
   const [showModal, setShowModal] = useState(false);
@@ -43,6 +44,7 @@ export default function NavBar() {
         <>
           <div className="modal-overlay" onClick={handleClose}></div>
           <GuestSelect/>
+          <DestinationSelect/>
           <div className="search-modal">
             <SearchComponent />
           </div>

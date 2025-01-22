@@ -5,16 +5,18 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import sliderImg from "../../assets/rightArrow.svg";
-import {useDispatch} from 'react-redux'
-import { onSelectCategory } from "../../features/categorySlice";
+import {useDispatch, useSelector} from 'react-redux'
+import { onSelectCategory, setCategories } from "../../features/HotelDataSlice";
+
 
 export const Categories = () => {
-  const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
+  const {categories} = useSelector(state => state.home);
 
   const getCategories = async () => {
     const { data } = await axios.get(`http://localhost:5000/api/category`);
-    setCategories(data);
+    console.log(data)
+    dispatch(setCategories(data));
   };
 
   useEffect(() => {

@@ -25,7 +25,7 @@ route.get('/hotel/:id',async(req,res)=>{
     try {
         const {id} = req.params;
         const hotelById = await Hotel.findById(id);
-        console.log(hotelById)
+        // console.log(hotelById)
         res.json(hotelById);       
     } catch (error) {
         console.log(error);

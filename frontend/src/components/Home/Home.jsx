@@ -4,17 +4,18 @@ import "./main.css";
 import NavBar from "../Navbar/NavBar"
 import { HotelCard } from "../HotelCard/HotelCard";
 import { Categories } from "../Categories/Categories";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { addHotels } from "../../features/HotelDataSlice";
 
 function Home() {
   const [hotels, setHotels] = useState([]);
-  const [allHotels, setAllHotels] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-
-  const selectedCategory = useSelector(
-    (state) => state.category.selectedCategory
+  
+  const dispatch = useDispatch();
+  const {selectedCategory,allHotels} = useSelector(
+    (state) => state.home
   );
   const fetchData = async () => {
     try {
@@ -23,7 +24,7 @@ function Home() {
           selectedCategory ? `?category=${selectedCategory}` : ""
         }`
       );
-      setAllHotels(data);
+      dispatch(addHotels(data));
       setHotels(data ? data.slice(0,8) : []);
       setHasMore(data.length > 8);
       setCurrentPage(8);

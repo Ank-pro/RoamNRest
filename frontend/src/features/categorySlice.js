@@ -15,5 +15,5 @@ const categorySlice = createSlice({
     }
 })
 
-export const { onSelectCategory } = categorySlice.actions;
-export default categorySlice.reducer;
+/* export const { onSelectCategory } = categorySlice.actions;
+export default categorySlice.reducer; */

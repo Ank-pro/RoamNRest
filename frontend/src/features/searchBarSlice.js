@@ -3,8 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     checkInDate: null,
     checkOutDate: null,
-    guest: 1,
-    destination: ""
+    guest: {
+        adults: 1,
+        childrens: 0,
+        pets: 0
+    },
+    guestModal : false,
+    destination: "",
+    destinationModal : false
 }
 
 const searchBarSlice = createSlice({
@@ -17,7 +23,7 @@ const searchBarSlice = createSlice({
             state.checkOutDate = checkout ? checkout.toISOString() : null;
         },
         setGuest: (state, action) => {
-            state.guest = action.payload;
+            state.guest = { ...action.payload };
         },
         setDestination: (state, action) => {
             state.destination = action.payload;
