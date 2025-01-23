@@ -4,18 +4,24 @@
     flex-direction: column;
     top: 16%;
     width: 28vw;
-    left: 20%;
-    border-radius: 30px;
+    left: 25.5%;
+    border-radius: 25px;
     z-index: 1000;
-    background-color: rgb(249, 247, 247);
-    padding: 2rem;
+    background-color: rgb(249, 247, 247);    
+    /* padding: 2rem; */
 }
+
 .search-hotels li{
     list-style: none;
     cursor: pointer;
-    padding: 14px;
+    padding: 1rem;
+    margin: 5px;
+    color: #ffff;
+    text-shadow: 1px 1px 3px rgba(253, 8, 8, 0.8);
+    font-weight: bolder;
     border-radius: 15px;
+    transition: transform 0.1s ease-in-out;
 }
 .search-hotels li:hover{
-    background-color: rgb(211, 214, 215);
+    transform: scale(1.02);
 }

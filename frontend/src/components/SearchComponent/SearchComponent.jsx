@@ -3,21 +3,39 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import searchImg from "../../assets/search.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setDates, setDestination } from "../../features/searchBarSlice";
+import {
+  setDates,
+  setDestination,
+  showDestinationModal,
+  showGuestModal,
+  showSearchModal,
+} from "../../features/searchBarSlice";
 import { useEffect, useState } from "react";
 import { GuestSelect } from "./guest-select/GuestSelect";
+import { useNavigate } from "react-router-dom";
+import { setSingleHotel } from "../../features/HotelDataSlice";
 
 export const SearchComponent = () => {
   const dispatch = useDispatch();
-  const { destination, checkInDate, checkOutDate, guest : {adults,childrens,pets} } = useSelector(
-    (state) => state.search
-  );
+  const {
+    destination,
+    checkInDate,
+    checkOutDate,
+    guest: { adults, childrens, pets },
+  } = useSelector((state) => state.search);
+  const {singleHotel} = useSelector(state => state.home)
+  const navigate = useNavigate();
 
   const checkInDateObj = checkInDate ? new Date(checkInDate) : null;
   const checkOutDateObj = checkOutDate ? new Date(checkOutDate) : null;
-  const totalPets = pets > 0 ? `, ${pets} ${pets === 1 ? 'pet' : 'pets'}` : '';
-  const totalChilds = childrens > 0 ?  `, ${childrens} ${childrens === 1 ? 'child' : 'childs'}` : '';
-  const totalGuests = `${adults} ${adults === 1 ? `adult`: `adults`}${totalChilds}${totalPets}`;
+  const totalPets = pets > 0 ? `, ${pets} ${pets === 1 ? "pet" : "pets"}` : "";
+  const totalChilds =
+    childrens > 0
+      ? `, ${childrens} ${childrens === 1 ? "child" : "childs"}`
+      : "";
+  const totalGuests = `${adults} ${
+    adults === 1 ? `adult` : `adults`
+  }${totalChilds}${totalPets}`;
 
   useEffect(() => {
     console.log(checkInDateObj);
@@ -31,8 +49,26 @@ export const SearchComponent = () => {
     dispatch(setDates({ checkin: checkInDateObj, checkout: date }));
   }
 
-  function handleDestination(e){
-    dispatch(setDestination(e.target.value))
+  function handleDestination(e) {
+    const name = e.target.value; //
+    dispatch(setDestination({name}));
+  }
+
+  function handleDestinationModal() {
+    dispatch(showDestinationModal(true));
+    dispatch(showGuestModal(false));
+  }
+
+  function handleGuestModal() {
+    dispatch(showDestinationModal(false));
+    dispatch(showGuestModal(true));
+  }
+
+  function handleSearchedData(){
+    const {_id,name,city,address} = destination;
+    dispatch(showSearchModal(false))
+    navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
+    
   }
 
   return (
@@ -43,8 +79,9 @@ export const SearchComponent = () => {
           <input
             type="text"
             placeholder="Destination"
-            value={destination}
+            value={destination?.name || ''}
             onChange={handleDestination}
+            onFocus={handleDestinationModal}
           />
         </div>
       </div>
@@ -53,7 +90,8 @@ export const SearchComponent = () => {
         <div className="place">
           <label>Check-in</label>
           <DatePicker
-            selected={checkInDate}
+            selected={checkInDateObj}
+            minDate={new Date()}
             placeholderText="Set date"
             onChange={handleInDate}
             closeOnScroll={true}
@@ -67,6 +105,7 @@ export const SearchComponent = () => {
           <label>Check-out</label>
           <DatePicker
             selected={checkOutDate}
+            minDate={checkInDateObj}
             closeOnScroll={true}
             placeholderText="Set date"
             onChange={handleOutDate}
@@ -83,10 +122,11 @@ export const SearchComponent = () => {
             id="guest-input"
             placeholder="Add guests"
             value={totalGuests}
+            onClick={handleGuestModal}
           />
         </div>
         <div className="search-img">
-          <img src={searchImg} alt="search" />
+          <img src={searchImg} alt="search" onClick={handleSearchedData}/>
         </div>
       </div>
     </div>

@@ -5,17 +5,28 @@ import userImg from '../../assets/user.svg';
 import {SearchComponent} from '../SearchComponent/SearchComponent'
 import { GuestSelect } from "../SearchComponent/guest-select/GuestSelect";
 import { DestinationSelect } from "../SearchComponent/dest-select/DestinationSelect";
+import { useDispatch, useSelector } from "react-redux";
+import { showDestinationModal, showGuestModal, showSearchModal } from "../../features/searchBarSlice";
 
 export default function NavBar() {
-  const [showModal, setShowModal] = useState(false);
+  
+  const {destinationModal,destination,searchModal,guestModal} = useSelector(state => state.search);
+  const dispatch = useDispatch();
 
   function handleSearch() {
-    setShowModal(true);
+    dispatch(showSearchModal(true))
   }
 
   function handleClose() {
-    setShowModal(false);
+    dispatch(showDestinationModal(false))
+    dispatch(showGuestModal(false))
   }
+
+  useEffect(()=>{
+    window.addEventListener('scroll',()=>{
+      dispatch(showSearchModal(false))
+    })
+  },[])
 
   return (
     <>
@@ -40,11 +51,11 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {showModal && (
+      {searchModal && (
         <>
           <div className="modal-overlay" onClick={handleClose}></div>
-          <GuestSelect/>
-          <DestinationSelect/>
+          {guestModal && <GuestSelect/>}
+          {destinationModal && destination && <DestinationSelect/>}
           <div className="search-modal">
             <SearchComponent />
           </div>

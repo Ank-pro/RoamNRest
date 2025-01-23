@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    checkInDate: null,
+    checkInDate: new Date(),
     checkOutDate: null,
     guest: {
         adults: 1,
         childrens: 0,
         pets: 0
     },
-    guestModal : false,
-    destination: "",
-    destinationModal : false
+    guestModal: false,
+    searchModal: false,
+    destination: null,
+    destinationModal: false
 }
 
 const searchBarSlice = createSlice({
@@ -26,11 +27,20 @@ const searchBarSlice = createSlice({
             state.guest = { ...action.payload };
         },
         setDestination: (state, action) => {
-            state.destination = action.payload;
+            state.destination = action.payload;            
+        },
+        showDestinationModal: (state, action) => {
+            state.destinationModal = action.payload;
+        },
+        showGuestModal: (state, action) => {
+            state.guestModal = action.payload;
+        },
+        showSearchModal: (state, action) => {
+            state.searchModal = action.payload;
         }
 
     }
 })
 
-export const { setDates, setDestination, setGuest } = searchBarSlice.actions;
+export const { setDates, setDestination, setGuest, showDestinationModal, showSearchModal, showGuestModal } = searchBarSlice.actions;
 export default searchBarSlice.reducer;
