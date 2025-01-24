@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     checkInDate: new Date(),
-    checkOutDate: null,
+    checkOutDate: new Date(),
     guest: {
         adults: 1,
         childrens: 0,
@@ -20,14 +20,14 @@ const searchBarSlice = createSlice({
     reducers: {
         setDates: (state, action) => {
             const { checkin, checkout } = action.payload;
-            state.checkInDate = checkin ? checkin.toISOString() : null;
-            state.checkOutDate = checkout ? checkout.toISOString() : null;
+            state.checkInDate = checkin || state.checkInDate;
+            state.checkOutDate = checkout || null;
         },
         setGuest: (state, action) => {
             state.guest = { ...action.payload };
         },
         setDestination: (state, action) => {
-            state.destination = action.payload;            
+            state.destination = action.payload;
         },
         showDestinationModal: (state, action) => {
             state.destinationModal = action.payload;

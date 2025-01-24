@@ -23,7 +23,7 @@ export const SearchComponent = () => {
     checkOutDate,
     guest: { adults, childrens, pets },
   } = useSelector((state) => state.search);
-  const {singleHotel} = useSelector(state => state.home)
+  const { singleHotel } = useSelector((state) => state.home);
   const navigate = useNavigate();
 
   const checkInDateObj = checkInDate ? new Date(checkInDate) : null;
@@ -51,7 +51,7 @@ export const SearchComponent = () => {
 
   function handleDestination(e) {
     const name = e.target.value; //
-    dispatch(setDestination({name}));
+    dispatch(setDestination({ name }));
   }
 
   function handleDestinationModal() {
@@ -64,11 +64,17 @@ export const SearchComponent = () => {
     dispatch(showGuestModal(true));
   }
 
-  function handleSearchedData(){
-    const {_id,name,city,address} = destination;
-    dispatch(showSearchModal(false))
-    navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
-    
+  function handleSearchedData() {
+    try {
+      const { _id, name, city, address } = destination;
+      dispatch(showSearchModal(false));
+      if (!checkOutDateObj && checkInDateObj) {
+        dispatch(setDates({ checkin: checkInDateObj, checkout: checkInDateObj }));
+      }
+      navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
+    } catch (error) {
+      console.log('Cannot search empty : ',error)
+    }
   }
 
   return (
@@ -79,7 +85,7 @@ export const SearchComponent = () => {
           <input
             type="text"
             placeholder="Destination"
-            value={destination?.name || ''}
+            value={destination?.name || ""}
             onChange={handleDestination}
             onFocus={handleDestinationModal}
           />
@@ -126,7 +132,7 @@ export const SearchComponent = () => {
           />
         </div>
         <div className="search-img">
-          <img src={searchImg} alt="search" onClick={handleSearchedData}/>
+          <img src={searchImg} alt="search" onClick={handleSearchedData} />
         </div>
       </div>
     </div>

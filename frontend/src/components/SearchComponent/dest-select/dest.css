@@ -16,8 +16,8 @@
     cursor: pointer;
     padding: 1rem;
     margin: 5px;
-    color: #ffff;
-    text-shadow: 1px 1px 3px rgba(253, 8, 8, 0.8);
+    color: #696666;
+    /* text-shadow: 1px 1px 3px rgba(253, 8, 8, 0.8); */
     font-weight: bolder;
     border-radius: 15px;
     transition: transform 0.1s ease-in-out;

@@ -36,11 +36,11 @@ export const DestinationSelect = () => {
             <ul key={hotel._id} className="search-hotels">
               <li
                 onClick={() => handleSetHotel(hotel)}
-                style={{
-                  backgroundImage: `url(${hotel.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
+                // style={{
+                //   backgroundImage: `url(${hotel.image})`,
+                //   backgroundSize: "cover",
+                //   backgroundPosition: "center",
+                // }}
               >
                 {hotel.name}
               </li>

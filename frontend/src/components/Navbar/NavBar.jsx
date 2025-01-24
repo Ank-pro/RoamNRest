@@ -1,32 +1,63 @@
 import React, { useState, useEffect } from "react";
 import "./nav.css";
-import searchImg from '../../assets/search.svg';
-import userImg from '../../assets/user.svg';
-import {SearchComponent} from '../SearchComponent/SearchComponent'
+import searchImg from "../../assets/search.svg";
+import userImg from "../../assets/user.svg";
+import { SearchComponent } from "../SearchComponent/SearchComponent";
 import { GuestSelect } from "../SearchComponent/guest-select/GuestSelect";
 import { DestinationSelect } from "../SearchComponent/dest-select/DestinationSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { showDestinationModal, showGuestModal, showSearchModal } from "../../features/searchBarSlice";
+import {
+  showDestinationModal,
+  showGuestModal,
+  showSearchModal,
+} from "../../features/searchBarSlice";
 
 export default function NavBar() {
-  
-  const {destinationModal,destination,searchModal,guestModal} = useSelector(state => state.search);
+  const {
+    destinationModal,
+    destination,
+    searchModal,
+    guestModal,
+    checkInDate,
+    checkOutDate,
+    guest,
+  } = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
   function handleSearch() {
-    dispatch(showSearchModal(true))
+    dispatch(showSearchModal(true));
   }
 
   function handleClose() {
-    dispatch(showDestinationModal(false))
-    dispatch(showGuestModal(false))
+    dispatch(showDestinationModal(false));
+    dispatch(showGuestModal(false));
   }
 
-  useEffect(()=>{
-    window.addEventListener('scroll',()=>{
-      dispatch(showSearchModal(false))
-    })
-  },[])
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      dispatch(showSearchModal(false));
+    });
+  }, []);
+
+  function dateDuration(inDate, outDate) {
+    const date1 = new Date(inDate);
+    const date2 = new Date(outDate);
+    const start = date1.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+    });
+    const end = date2.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+    });
+    return `${start} - ${end}`;
+  }
+
+  const totalGuests = () => {
+    let total = 0;
+    Object.entries(guest).forEach(([key, val]) => (total += val));
+    return total;
+  };
 
   return (
     <>
@@ -34,13 +65,22 @@ export default function NavBar() {
         <div className="heading">RoamNRest</div>
 
         <div className="navlist" onClick={handleSearch}>
-          <li>Anywhere</li>
+          <li>{destination?.name ? destination.name : "Anywhere"}</li>
           <span></span>
-          <li>Any week</li>
+          <li>
+            {checkInDate && checkOutDate && checkInDate !== checkOutDate
+              ? dateDuration(checkInDate, checkOutDate)
+              : "Any week"}
+          </li>
           <span></span>
-          <li>Add Guests</li> 
-          <span></span>      
-          <li><img src={searchImg} alt="search" height="25" width="25"/></li>
+          <li>
+            {totalGuests() > 1 ? `${totalGuests()} Guests` : "Add Guests"}
+          </li>
+
+          <span></span>
+          <li>
+            <img src={searchImg} alt="search" height="25" width="25" />
+          </li>
         </div>
 
         <div className="user-section">
@@ -54,8 +94,8 @@ export default function NavBar() {
       {searchModal && (
         <>
           <div className="modal-overlay" onClick={handleClose}></div>
-          {guestModal && <GuestSelect/>}
-          {destinationModal && destination && <DestinationSelect/>}
+          {guestModal && <GuestSelect />}
+          {destinationModal && destination && <DestinationSelect />}
           <div className="search-modal">
             <SearchComponent />
           </div>
