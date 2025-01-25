@@ -2,7 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import "./dest.css";
 import { useNavigate } from "react-router-dom";
 import { setSingleHotel } from "../../../features/HotelDataSlice";
-import { setDestination, showSearchModal } from "../../../features/searchBarSlice";
+import {
+  setDestination,
+  showDestinationModal,
+  showSearchModal,
+} from "../../../features/searchBarSlice";
 import { useEffect } from "react";
 
 export const DestinationSelect = () => {
@@ -11,22 +15,34 @@ export const DestinationSelect = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const dest = destination?.name?.trim().toLowerCase() || "";
+  const dest = destination.toLowerCase() || "";
   const searchHotels = dest
-    ? allHotels.filter((hotel) =>
-        hotel.name.split(" ").join("").toLowerCase().startsWith(dest)
-      )
+    ? Array.from(
+        new Set(
+          allHotels
+            .filter((hotel) =>
+              hotel.address.split(" ").join("").toLowerCase().startsWith(dest)
+            )
+            .map((hotel) => hotel.address)
+        )
+      ).map((uniqueAddress) => {
+        const hotel = allHotels.find(
+          (hotel) => hotel.address === uniqueAddress
+        );
+        return { address: hotel.address, state: hotel.state, id: hotel._id };
+      })
     : [];
 
-  function handleSetHotel(hotel) {
+  console.log(searchHotels);
+
+  function handleSetLocation(hotel) {
     // const {_id,name,city,address} = hotel;
     // navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
     // dispatch(showSearchModal(false))
-    dispatch(setDestination(hotel))
-    // dispatch(setDestination(hotel.name)) 
-
+    dispatch(setDestination(hotel.address));
+    dispatch(showDestinationModal(false));
+    // dispatch(setDestination(hotel.name))
   }
-  
 
   return (
     <>
@@ -35,14 +51,14 @@ export const DestinationSelect = () => {
           {searchHotels.map((hotel) => (
             <ul key={hotel._id} className="search-hotels">
               <li
-                onClick={() => handleSetHotel(hotel)}
+                onClick={() => handleSetLocation(hotel)}
                 // style={{
                 //   backgroundImage: `url(${hotel.image})`,
                 //   backgroundSize: "cover",
                 //   backgroundPosition: "center",
                 // }}
               >
-                {hotel.name}
+                {`${hotel.address}, ${hotel.state}`}
               </li>
             </ul>
           ))}

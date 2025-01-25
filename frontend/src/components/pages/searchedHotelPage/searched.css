@@ -1,0 +1,4 @@
+.location-hotels{
+    display: flex;
+    flex-wrap: wrap;
+}

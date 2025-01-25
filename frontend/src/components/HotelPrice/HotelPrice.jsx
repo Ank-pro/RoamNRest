@@ -70,6 +70,7 @@ export const HotelPrice = ({ singleHotel }) => {
           <input
             type="text"
             placeholder="Guest"
+            readOnly
             value={`${totalGuests()} ${totalGuests() > 1 ? "guests" : "guest"}`}
           />
         </div>

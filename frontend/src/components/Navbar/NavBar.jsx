@@ -11,6 +11,7 @@ import {
   showGuestModal,
   showSearchModal,
 } from "../../features/searchBarSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const {
@@ -23,6 +24,7 @@ export default function NavBar() {
     guest,
   } = useSelector((state) => state.search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleSearch() {
     dispatch(showSearchModal(true));
@@ -31,11 +33,14 @@ export default function NavBar() {
   function handleClose() {
     dispatch(showDestinationModal(false));
     dispatch(showGuestModal(false));
+    dispatch(showSearchModal(false))
   }
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       dispatch(showSearchModal(false));
+      dispatch(showGuestModal(false));
+      dispatch(showDestinationModal(false))
     });
   }, []);
 
@@ -62,10 +67,10 @@ export default function NavBar() {
   return (
     <>
       <nav className="navbar">
-        <div className="heading">RoamNRest</div>
+        <div className="heading" onClick={()=> navigate('/')}>RoamNRest</div>
 
         <div className="navlist" onClick={handleSearch}>
-          <li>{destination?.name ? destination.name : "Anywhere"}</li>
+          <li>{destination ? destination : "Anywhere"}</li>
           <span></span>
           <li>
             {checkInDate && checkOutDate && checkInDate !== checkOutDate

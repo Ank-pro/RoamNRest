@@ -50,8 +50,8 @@ export const SearchComponent = () => {
   }
 
   function handleDestination(e) {
-    const name = e.target.value; //
-    dispatch(setDestination({ name }));
+    const address = e.target.value.trim(); //
+    dispatch(setDestination(address));
   }
 
   function handleDestinationModal() {
@@ -66,14 +66,17 @@ export const SearchComponent = () => {
 
   function handleSearchedData() {
     try {
-      const { _id, name, city, address } = destination;
       dispatch(showSearchModal(false));
       if (!checkOutDateObj && checkInDateObj) {
-        dispatch(setDates({ checkin: checkInDateObj, checkout: checkInDateObj }));
+        dispatch(
+          setDates({ checkin: checkInDateObj, checkout: checkInDateObj })
+        );
       }
-      navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
+      console.log(destination)
+      navigate(`/hotels/${destination}`);
+      
     } catch (error) {
-      console.log('Cannot search empty : ',error)
+      console.log("Cannot search empty : ", error);
     }
   }
 
@@ -85,7 +88,7 @@ export const SearchComponent = () => {
           <input
             type="text"
             placeholder="Destination"
-            value={destination?.name || ""}
+            value={destination || ""}
             onChange={handleDestination}
             onFocus={handleDestinationModal}
           />
@@ -103,6 +106,10 @@ export const SearchComponent = () => {
             closeOnScroll={true}
             dateFormat="dd MMM"
             className="search-date"
+            onFocus={() => {
+              dispatch(showDestinationModal(false));
+              dispatch(showGuestModal(false));
+            }}
           />
         </div>
       </div>
@@ -117,6 +124,10 @@ export const SearchComponent = () => {
             onChange={handleOutDate}
             dateFormat="dd MMM"
             className="search-date"
+            onFocus={() => {
+              dispatch(showDestinationModal(false));
+              dispatch(showGuestModal(false));
+            }}
           />
         </div>
       </div>

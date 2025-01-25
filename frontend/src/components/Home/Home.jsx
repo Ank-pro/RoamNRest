@@ -62,6 +62,7 @@ function Home() {
     dispatch(setDestination(null));
     dispatch(setGuest({ adults: 1, childrens: 0, pets: 0 }));
     dispatch(setDates({checkin : new Date(), checkout : null}))
+  
   }, []);
 
   return (

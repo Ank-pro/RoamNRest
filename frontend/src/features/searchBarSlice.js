@@ -10,7 +10,7 @@ const initialState = {
     },
     guestModal: false,
     searchModal: false,
-    destination: null,
+    destination: "",
     destinationModal: false
 }
 

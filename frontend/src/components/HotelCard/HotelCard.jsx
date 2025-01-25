@@ -10,6 +10,7 @@ export const HotelCard = ({ hotel }) => {
   //   return <p>Loading...</p>;
   // }
   const handleSingleHotel = ()=>{
+    console.log(hotel)
     navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
   }
 

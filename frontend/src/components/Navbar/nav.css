@@ -30,6 +30,7 @@
     font-size: 1rem;
     /* max-height: 7vh;
     border: 1px solid black; */
+    color: rgb(85, 85, 87);
     background-color: transparent;
 }
 
@@ -46,6 +47,7 @@
 .heading{
     background-color: transparent;
     font-size: 1.25rem;
+    cursor: pointer;
     font-weight: 600;
     transform: translateX(1rem);
     color: rgb(242, 117, 34);
