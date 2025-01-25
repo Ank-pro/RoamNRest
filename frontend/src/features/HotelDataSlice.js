@@ -4,7 +4,8 @@ const initialState = {
     allHotels: [],
     selectedCategory: "",
     categories : [],
-    singleHotel : null
+    singleHotel : null,
+    filterModal : false,
 }
 
 const HotelDataSlice = createSlice({
@@ -22,9 +23,12 @@ const HotelDataSlice = createSlice({
         },
         setSingleHotel : (state,action)=>{
             state.singleHotel = action.payload;
+        },
+        showFilterModal : (state,action)=>{
+            state.filterModal = action.payload;
         }
     }
 })
 
-export const {addHotels,onSelectCategory,setCategories,setSingleHotel} = HotelDataSlice.actions;
+export const {addHotels,onSelectCategory,setCategories,setSingleHotel,showFilterModal} = HotelDataSlice.actions;
 export default HotelDataSlice.reducer;

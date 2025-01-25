@@ -25,14 +25,20 @@
 .slider:hover{
     background-color: rgb(228, 232, 232);
 }
+.category-container{
+  display: flex;
+  /* border: 1px solid black; */
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
 .category-slider {
-    position: sticky;
-    /* border: 1px solid black; */
     background-color: white;
-    top: 0;
-    z-index: 100;
-    margin-top: 0.5rem;
+    /* border: 1px solid black; */
+    width: 92vw;
+    /* margin-top: 0.5rem; */
     padding-left: 2.25rem;
     padding-right: 2.25rem;
     padding-top: 7px;
@@ -71,3 +77,26 @@
   /* .slick-list {
     margin: 0 -10px;
   } */
+
+  .filter-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1001;
+  }
+  .filter-btn{
+    display: flex;
+    border: 1px solid black;
+    padding: 0 7px;
+    border-radius: 10px;
+    color: rgb(87, 85, 85);
+    gap: 2px;
+    max-height: 35px;
+    cursor: pointer;
+    margin-top: 9px;
+    justify-content: center;
+    align-items: center;
+  }
