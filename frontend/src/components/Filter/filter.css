@@ -14,6 +14,18 @@
   left: 30%;
   background-color: white;
   z-index: 1002;
+  opacity: 0;
+  visibility: hidden;
+  height: 20vh;
+  /* transform: translateY(-100%); */
+  transition: all 0.3s ease-out;
+}
+
+.filtering.modal-visible{
+  opacity: 1;
+  visibility: visible;
+  height: 100vh;
+  /* transform: translateY(0); */
 }
 
 /* header */
@@ -22,12 +34,18 @@
     top: 0;
     /* border: 1px solid black; */
     display: grid;
-    grid-template-columns: 1fr 1.25fr;
+    grid-template-columns: 1.25fr 1fr;
     font-size: 1.2rem;
     border-bottom: 1px solid rgb(171, 168, 168);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding: 1rem;
+}
+.filter-label,.close{
+  justify-self: end;
+}
+.close{
+  cursor: pointer;
 }
 
 .filter-container {
@@ -145,8 +163,8 @@
   justify-content: center;
   gap: 2rem;
 }
-.property-contents li {
-  border: 1px solid rgb(159, 156, 156);
+.property-name {
+  border: 1px solid rgb(211, 206, 206);
   display: flex;
   gap: 5px;
   padding: 10px 0;
@@ -156,11 +174,14 @@
   align-items: center;
   white-space: nowrap;
 }
-.property-contents li:hover{
-    box-shadow: 1px 1px 5px rgb(168, 167, 167);
+.property-name:hover{
+    box-shadow: 1px 1px 8px rgb(168, 167, 167);
 }
 .property-contents span {
   font-size: 15px;
+}
+.activeProperty{
+  border: 1px solid black;
 }
 
 

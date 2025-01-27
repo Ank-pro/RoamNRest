@@ -13,10 +13,12 @@ import {
 } from "../../features/HotelDataSlice";
 import filterImg from "../../assets/filter.svg";
 import { FilterModal } from "../Filter/FilterModal";
+import { Modal } from "../Portal/Modal";
+import { Badge } from "@mui/material";
 
 export const Categories = () => {
   const dispatch = useDispatch();
-  const { categories, filterModal } = useSelector((state) => state.home);
+  const { categories, filterModal,selectedCategory } = useSelector((state) => state.home);
 
   const getCategories = async () => {
     const { data } = await axios.get(`http://localhost:5000/api/category`);
@@ -32,6 +34,10 @@ export const Categories = () => {
     dispatch(onSelectCategory(category));
     // console.log(category)
   };
+
+  function handleShowFilterModal() {
+    dispatch(showFilterModal(true));
+  }
 
   const settings = {
     dots: false,
@@ -51,7 +57,7 @@ export const Categories = () => {
           <Slider {...settings}>
             {categories.map((cat) => (
               <div
-                className="slider"
+                className={`slider ${(selectedCategory === cat.category) ? 'slider-active' : ''}`}
                 key={cat._id}
                 onClick={() => handleCategorySelect(cat.category)}
               >
@@ -60,29 +66,32 @@ export const Categories = () => {
             ))}
           </Slider>
         </div>
-        <div
-          className="filter-btn"
-          onClick={() => dispatch(showFilterModal(true))}
+        <Badge
+          badgeContent={5}
+          color="success"
+          sx={{ transform: "translateY(5px)" }}
         >
-          <img
-            src={filterImg}
-            alt="filter"
-            className="filter-img"
-            height="19"
-            width="19"
-          />
-          <span>Filter</span>
-        </div>
+          <div className="filter-btn" onClick={handleShowFilterModal}>
+            <img
+              src={filterImg}
+              alt="filter"
+              className="filter-img"
+              height="19"
+              width="19"
+            />
+            <span>Filter</span>
+          </div>
+        </Badge>
       </div>
-      {filterModal && (
+      {
         <>
-        <div
-          className="filter-modal"
-          onClick={() => dispatch(showFilterModal(false))}
-        ></div>
-        <FilterModal/>
+          {
+            <Modal>
+              <FilterModal />
+            </Modal>
+          }
         </>
-      )}
+      }
     </>
   );
 };

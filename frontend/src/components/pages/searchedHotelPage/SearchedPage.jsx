@@ -11,6 +11,8 @@ export const SearchedPage = () => {
 
   const { allHotels } = useSelector((state) => state.home);
 
+  
+
   useEffect(() => {
     if (allHotels.length > 0) {
       localStorage.setItem("allHotels", JSON.stringify(allHotels));
@@ -19,8 +21,14 @@ export const SearchedPage = () => {
     const hotels = getHotels.filter(
       (hotel) => hotel.address.toLowerCase() === address.toLowerCase()
     );
+    
     setLocationData(hotels);
   }, []);
+
+  if(locationData.length === 0){
+    console.log('No Hotels found')
+  }
+  
 
   return (
     <div className="searched-container">

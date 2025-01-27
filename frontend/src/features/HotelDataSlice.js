@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     allHotels: [],
-    selectedCategory: "",
+    selectedCategory: "National Parks",
     categories : [],
+    filteredHotels : [],
     singleHotel : null,
     filterModal : false,
 }
@@ -26,9 +27,12 @@ const HotelDataSlice = createSlice({
         },
         showFilterModal : (state,action)=>{
             state.filterModal = action.payload;
+        },
+        setFilteredHotels : (state,action)=>{
+            state.filteredHotels = action.payload;
         }
     }
 })
 
-export const {addHotels,onSelectCategory,setCategories,setSingleHotel,showFilterModal} = HotelDataSlice.actions;
+export const {addHotels,onSelectCategory,setCategories,setSingleHotel,showFilterModal,setFilteredHotels} = HotelDataSlice.actions;
 export default HotelDataSlice.reducer;

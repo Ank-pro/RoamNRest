@@ -18,6 +18,7 @@ function Home() {
   const [hotels, setHotels] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const {filteredHotels} = useSelector(state => state.home);
 
   const dispatch = useDispatch();
   const { selectedCategory, allHotels } = useSelector((state) => state.home);
@@ -55,14 +56,22 @@ function Home() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, [selectedCategory]);
+    if(filteredHotels.length > 0){
+      const category_hotels = selectedCategory ? filteredHotels.filter(({category}) => category === selectedCategory) : filteredHotels;
+      setHotels(category_hotels.slice(0,8));
+      setHasMore(category_hotels.length > 8);
+      setCurrentPage(8);
+      console.log('Category:',selectedCategory)
+    }else{
+      fetchData();
+    }
+    
+  }, [selectedCategory,filteredHotels]);
 
   useEffect(() => {
     dispatch(setDestination(null));
     dispatch(setGuest({ adults: 1, childrens: 0, pets: 0 }));
     dispatch(setDates({checkin : new Date(), checkout : null}))
-  
   }, []);
 
   return (
