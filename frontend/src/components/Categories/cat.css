@@ -15,20 +15,34 @@
 
 .slider{
     border: none;
-    color: rgb(18, 18, 18,0.75);
-    background-color: rgb(244, 239, 239);
+    color: rgb(66, 64, 64);
     padding: 8px;
     border-radius: 20px;
     cursor: pointer;
-    
+    opacity: 0.5;
+    transition: all 0.2s ease;
 }
 
 .slider.slider-active{
-  border: 1px solid black;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  color: rgb(41, 41, 41);
+  cursor: auto;
+  opacity: 1;
+  text-decoration-thickness: 1.2px;
+  text-decoration-color: rgb(41, 41, 41,0.75);
 }
 
-.slider:hover{
-    background-color: rgb(228, 232, 232);
+.slider:not(.slider-active):hover{
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-color: rgb(41, 41, 41,0.25);
+    text-underline-offset: 7px;
+    text-decoration-thickness: 1.2px;
+    color: rgb(41, 41, 41);
+}
+.slider:active{
+  transform: scale(0.95);
 }
 .category-container{
   display: flex;

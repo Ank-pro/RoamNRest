@@ -74,7 +74,7 @@ export const SearchComponent = () => {
       }
       console.log(destination)
       dispatch(showDestinationModal(false));
-      dispatch(showGuestModal(false))
+      dispatch(showGuestModal(false));
       if(destination){
       navigate(`/hotels/${destination}`);
       }
