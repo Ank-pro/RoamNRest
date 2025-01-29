@@ -7,7 +7,11 @@ import guestImg from "./assets/guest.svg";
 import hotelImg from "./assets/hotel.svg";
 import { useDispatch, useSelector } from "react-redux";
 import closeImg from "./assets/close.svg";
-import { addHotels, setFilteredHotels, showFilterModal } from "../../features/HotelDataSlice";
+import {
+  addHotels,
+  setFilteredHotels,
+  showFilterModal,
+} from "../../features/HotelDataSlice";
 import {} from "../../features/HotelDataSlice";
 
 export const FilterModal = () => {
@@ -98,7 +102,7 @@ export const FilterModal = () => {
   }
 
   return (
-    <div className={`filtering ${filterModal ? "modal-visible" : ""}`}>
+    <div className="filtering">
       {/* header */}
       <div className="filter-header">
         <span className="filter-label">Filters</span>

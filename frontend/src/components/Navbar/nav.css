@@ -73,7 +73,7 @@
 .user-icon img{
     background-color: transparent;
     height: 100%;
-    filter: drop-shadow(1px 1px 4px rgb(69, 118, 121));
+    filter: drop-shadow(1px 1px 3px rgb(69, 118, 121));
     width: 100%;
 }
 

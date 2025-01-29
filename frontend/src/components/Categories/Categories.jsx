@@ -39,6 +39,10 @@ export const Categories = () => {
     dispatch(showFilterModal(true));
   }
 
+  function handleCloseModal(){
+    dispatch(showFilterModal(false))
+  }
+
   const settings = {
     dots: false,
     infinite: false,
@@ -85,8 +89,8 @@ export const Categories = () => {
       </div>
       {
         <>
-          {
-            <Modal>
+          {filterModal &&
+            <Modal onClose={handleCloseModal}>
               <FilterModal />
             </Modal>
           }

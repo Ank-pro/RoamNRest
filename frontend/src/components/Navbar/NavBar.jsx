@@ -12,6 +12,10 @@ import {
   showSearchModal,
 } from "../../features/searchBarSlice";
 import { useNavigate } from "react-router-dom";
+import { Modal } from "../Portal/Modal";
+import { LoginPage } from "../LoginPage/LoginPage";
+import { SignInPage } from "../LoginPage/SignInPage";
+import { showAuthModal, showLogin, showSignUp } from "../../features/AuthSlice";
 
 export default function NavBar() {
   const {
@@ -25,6 +29,7 @@ export default function NavBar() {
   } = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {login,signUp,authModal} = useSelector(state => state.auth);
 
   function handleSearch() {
     dispatch(showSearchModal(true));
@@ -33,14 +38,14 @@ export default function NavBar() {
   function handleClose() {
     dispatch(showDestinationModal(false));
     dispatch(showGuestModal(false));
-    dispatch(showSearchModal(false))
+    dispatch(showSearchModal(false));
   }
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       dispatch(showSearchModal(false));
       dispatch(showGuestModal(false));
-      dispatch(showDestinationModal(false))
+      dispatch(showDestinationModal(false));
     });
   }, []);
 
@@ -64,10 +69,19 @@ export default function NavBar() {
     return total;
   };
 
+  function handleAuthModal() {
+    dispatch(showAuthModal(true));
+  }
+  function handleCloseModal(){
+    dispatch(showAuthModal(false)); 
+  }
+
   return (
     <>
       <nav className="navbar">
-        <div className="heading" onClick={()=> navigate('/')}>RoamNRest</div>
+        <div className="heading" onClick={() => navigate("/")}>
+          RoamNRest
+        </div>
 
         <div className="navlist" onClick={handleSearch}>
           <li>{destination ? destination : "Anywhere"}</li>
@@ -89,8 +103,8 @@ export default function NavBar() {
         </div>
 
         <div className="user-section">
-          <p className="username">Hi, User</p>
-          <div className="user-icon">
+          <p className="username">Hi, Ankush</p>
+          <div className="user-icon" onClick={handleAuthModal}>
             <img src={userImg} alt="user-image" />
           </div>
         </div>
@@ -105,6 +119,13 @@ export default function NavBar() {
             <SearchComponent />
           </div>
         </>
+      )}
+
+      {authModal && (
+        <Modal onClose={handleCloseModal}>
+          {login && <LoginPage/>}
+          {signUp && <SignInPage />}
+        </Modal>
       )}
     </>
   );
