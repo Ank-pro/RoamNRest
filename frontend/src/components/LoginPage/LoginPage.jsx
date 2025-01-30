@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./login.css";
 import { showLogin, showSignUp } from "../../features/AuthSlice";
 
 export const LoginPage = () => {
-    const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
+  const { mobileNumber, password } = useSelector((state) => state.auth);
 
   return (
     <div className="login-container">
@@ -14,7 +14,8 @@ export const LoginPage = () => {
             Mobile Number <span className="star">*</span>
           </label>
           <input
-            type="tel"
+            className="mobile"
+            type="number"
             placeholder="Enter Your Mobile Number"
             pattern="[0-9]*"
             inputMode="numeric"

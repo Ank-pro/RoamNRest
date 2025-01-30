@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../model/userSchema')
 
 route.post('/auth/register',async(req,res)=>{
-    const {name,email,password} = req.body;
+    const {name,email,password,mobileNumber} = req.body;
     const user = await User.findOne({email});
     if(user){
         return res.json({message : 'User already exist'})
@@ -14,7 +14,7 @@ route.post('/auth/register',async(req,res)=>{
 
     const hasedPassword = await bcrypt.hash(password,salt);
 
-    const newUser = await new User({name,email,password : hasedPassword}).save();
+    const newUser = await new User({name,email,mobileNumber,password : hasedPassword}).save();
 
     res.send({user : newUser})
 })
