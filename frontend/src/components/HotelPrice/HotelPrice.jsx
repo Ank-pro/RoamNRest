@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setDates } from "../../features/searchBarSlice";
+import { useNavigate } from "react-router-dom";
 
 export const HotelPrice = ({ singleHotel }) => {
   // const [selectedDate,setSelectedDate] = useState(new Date())
@@ -11,6 +12,7 @@ export const HotelPrice = ({ singleHotel }) => {
     (state) => state.search
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { rating, price } = singleHotel;
 
@@ -27,6 +29,10 @@ export const HotelPrice = ({ singleHotel }) => {
     Object.entries(guest).forEach(([key, val]) => (total += val));
     return total;
   };
+
+  function handleReserve(){
+    navigate('/reserve');
+  }
 
   const totalNights = Math.ceil(
     (new Date(checkOutDate) - new Date(checkInDate)) / 1000 / 60 / 60 / 24
@@ -76,7 +82,7 @@ export const HotelPrice = ({ singleHotel }) => {
         </div>
 
         <div className="reserve">
-          <button type="button" id="res-btn">
+          <button type="button" id="res-btn" onClick={handleReserve}>
             Reserve
           </button>
         </div>

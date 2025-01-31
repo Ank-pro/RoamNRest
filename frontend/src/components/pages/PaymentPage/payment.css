@@ -1,0 +1,17 @@
+.hotel-details{
+    display: flex;
+    gap: 2px;
+}
+
+.hotel-prop{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.total-price-container{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}

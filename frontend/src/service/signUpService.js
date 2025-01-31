@@ -11,7 +11,7 @@ export const signUpHandler = async(mobileNumber,name,email,password)=>{
         // console.log(data);
         return data;
     } catch (error) {
-        console.log("Error adding user")
+        console.log(error.response.data)
     }
 }
 

@@ -20,15 +20,15 @@ route.post('/auth/register',async(req,res)=>{
 })
 
 route.post('/auth/login',async(req,res)=>{
-    const {email,password} = req.body;
-    const user = await User.findOne({email});
-
+    const {mobileNumber,password} = req.body;
+    const user = await User.findOne({mobileNumber});
+    console.log({mobileNumber,password})
     if(!user){
-        return res.status(400).send('Invalid credentials');
+        return res.status(400).send({error : 'Invalid credentials'});
     }
 
     const comparedPass = await bcrypt.compare(password, user.password);
-
+    console.log(comparedPass)
     if(comparedPass){
         const token = jwt.sign({userId : user._id},"qwerty");
         return res.status(200).send({user : user, token})

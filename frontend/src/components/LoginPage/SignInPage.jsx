@@ -12,7 +12,11 @@ let isMobileValid, isMailValid, isNameValid, isPasswordValid, isPasswordMatch;
 export const SignInPage = () => {
   const { formValues, errors } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [success,setSuccess] = useState("")
+  const [success, setSuccess] = useState("");
+
+  // useEffect(()=>{
+  //   alert(errors.userError);
+  // },[errors.userError])
 
   function handleMobile(e) {
     let inputValue = e.target.value;
@@ -95,14 +99,27 @@ export const SignInPage = () => {
       isPasswordMatch
     ) {
       const res = await signUpHandler(mobileNumber, name, email, password);
-      console.log(res.message)
-      if(res.message === 'User already exist'){
-        dispatch(setErrors({userError : 'User already exist'}))
-        alert(errors.userError)
-      }else{
-        setSuccess('Success')
+      console.log(res);
+      if (res.message === "User already exist") {
+        dispatch(setErrors({ userError: "User already exist" }));
+        alert(errors.userError);
+      } else {
+        setSuccess("Success");
       }
     }
+    else{
+      console.log('Please Fill whole form')
+    }
+    dispatch(
+      setFormValues({
+        mobileNumber: "",
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      })
+    );
+    dispatch(setErrors({}));
   }
 
   useEffect(() => {

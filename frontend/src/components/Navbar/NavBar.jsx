@@ -27,6 +27,7 @@ export default function NavBar() {
     checkOutDate,
     guest,
   } = useSelector((state) => state.search);
+  const {user} = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {login,signUp,authModal} = useSelector(state => state.auth);
@@ -103,7 +104,7 @@ export default function NavBar() {
         </div>
 
         <div className="user-section">
-          <p className="username">Hi, Ankush</p>
+          <p className="username">Hi,{user.name ? user.name : 'User'}</p>
           <div className="user-icon" onClick={handleAuthModal}>
             <img src={userImg} alt="user-image" />
           </div>

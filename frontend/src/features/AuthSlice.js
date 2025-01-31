@@ -11,7 +11,11 @@ const initialState = {
         password : "",
         confirmPassword : ""
     },
-    errors : {}
+    errors : {},
+    user : {
+        name : '',
+        token : ''
+    }
 }
 
 const AuthSlice = createSlice({
@@ -32,9 +36,13 @@ const AuthSlice = createSlice({
         },
         setErrors : (state,action)=>{
             state.errors = {...state.errors, ...action.payload};
+        },
+        setUser : (state,action)=>{
+            const {name,token} = action.payload;
+            state.user = {name,token};
         }
     }
 });
 
-export const {showLogin,showSignUp,showAuthModal,setFormValues,setErrors} = AuthSlice.actions;
+export const {showLogin,showSignUp,showAuthModal,setFormValues,setUser,setErrors} = AuthSlice.actions;
 export default AuthSlice.reducer;
