@@ -19,7 +19,7 @@ function App() {
         <Route path="/hotel/:name/:address/:city/:id/reserve" element={<SingleHotel/>}/>
         <Route path="/hotels/:address" element={<SearchedPage/>}/>
         <Route path="/wishlist" element={<WishList/>}/>
-        <Route path="/reserve" element={<PaymentPage/>}/>
+        <Route path="/book/stay/:id" element={<PaymentPage/>}/>
       </Routes>
       
     </>

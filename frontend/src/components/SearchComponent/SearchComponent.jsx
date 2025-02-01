@@ -121,7 +121,7 @@ export const SearchComponent = () => {
         <div className="place">
           <label>Check-out</label>
           <DatePicker
-            selected={checkOutDate}
+            selected={checkOutDateObj}
             minDate={checkInDateObj}
             closeOnScroll={true}
             placeholderText="Set date"

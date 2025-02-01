@@ -1,42 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./price.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setDates } from "../../features/searchBarSlice";
+import { setDates, setGuest } from "../../features/searchBarSlice";
 import { useNavigate } from "react-router-dom";
+import { PriceGuestModal } from "./PriceGuestModal";
 
 export const HotelPrice = ({ singleHotel }) => {
   // const [selectedDate,setSelectedDate] = useState(new Date())
-  const { checkInDate, checkOutDate, guest } = useSelector(
-    (state) => state.search
-  );
+  const {
+    checkInDate,
+    checkOutDate,
+    guest: { adults, childrens, pets },
+  } = useSelector((state) => state.search);
+
+  let inDate = new Date(checkInDate);
+  let outDate = new Date(checkOutDate);
+
+  const [gModal, setgModal] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { rating, price } = singleHotel;
+  const { rating, price, _id } = singleHotel;
 
   function handleCheckInChange(date) {
-    dispatch(setDates({ checkin: date, checkout: checkOutDate }));
+    dispatch(setDates({ checkin: date ? date.toISOString() : inDate, checkout: checkOutDate }));
   }
 
   function handleCheckOutChange(date) {
-    dispatch(setDates({ checkin: checkInDate, checkout: date }));
+    dispatch(setDates({ checkin: checkInDate, checkout: date ? date.toISOString() : outDate }));
   }
 
-  const totalGuests = () => {
-    let total = 0;
-    Object.entries(guest).forEach(([key, val]) => (total += val));
-    return total;
-  };
+  function handleBooking() {
+    navigate(`/book/stay/${_id}`);
+  }
 
-  function handleReserve(){
-    navigate('/reserve');
+  function handleGModal(e) {
+    e.stopPropagation();
+    setgModal((prev) => !prev);
   }
 
   const totalNights = Math.ceil(
     (new Date(checkOutDate) - new Date(checkInDate)) / 1000 / 60 / 60 / 24
   );
+  const totalGuests = adults + childrens + pets;
+
   return (
     <div className="price-container">
       <div className="price">
@@ -50,10 +59,9 @@ export const HotelPrice = ({ singleHotel }) => {
         <div className="check-in">
           <span>Check-in</span>
           <DatePicker
-            selected={checkInDate}
+            selected={inDate}
             closeOnScroll={true}
             minDate={new Date()}
-            maxDate={checkOutDate && checkOutDate}
             onChange={handleCheckInChange}
             dateFormat="dd/MM/yyyy"
             className="date-input"
@@ -63,9 +71,9 @@ export const HotelPrice = ({ singleHotel }) => {
         <div className="check-out">
           <span>Check-out</span>
           <DatePicker
-            selected={checkOutDate}
+            selected={outDate}
             closeOnScroll={true}
-            minDate={checkInDate}
+            minDate={inDate}
             onChange={handleCheckOutChange}
             dateFormat="dd/MM/yyyy"
             className="date-input"
@@ -77,12 +85,22 @@ export const HotelPrice = ({ singleHotel }) => {
             type="text"
             placeholder="Guest"
             readOnly
-            value={`${totalGuests()} ${totalGuests() > 1 ? "guests" : "guest"}`}
+            value={`${totalGuests > 1 ? `${totalGuests} guests` : `1 guest`}`}
+            onClick={handleGModal}
           />
         </div>
+        {gModal && (
+          <PriceGuestModal
+            pets={pets}
+            adults={adults}
+            childrens={childrens}
+            gModal={gModal}
+            setgModal={setgModal}
+          />
+        )}
 
         <div className="reserve">
-          <button type="button" id="res-btn" onClick={handleReserve}>
+          <button type="button" id="res-btn" onClick={handleBooking}>
             Reserve
           </button>
         </div>

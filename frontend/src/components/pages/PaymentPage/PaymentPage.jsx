@@ -1,42 +1,118 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./payment.css";
 import { useEffect } from "react";
+import NavBar from "../../Navbar/NavBar";
+import { useNavigate, useParams } from "react-router-dom";
+import { setSingleHotel } from "../../../features/HotelDataSlice";
+import axios from "axios";
 
 export const PaymentPage = () => {
-    const {singleHotel} = useSelector(state => state.home)
-  const { image, name, rating,price } = singleHotel;
-useEffect(()=>{
-    console.log(singleHotel)
-},[singleHotel])
+  const { id } = useParams();
+  const { singleHotel } = useSelector((state) => state.home);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { checkInDate, checkOutDate, guest } = useSelector(
+    (state) => state.search
+  );
+
+
+  async function fetchHotel() {
+    try {
+      const { data } = await axios.get(`http://localhost:5000/api/hotel/${id}`);
+      // console.log(data);
+      dispatch(setSingleHotel(data));
+    } catch (error) {
+      console.log("Cant find the hotel", error);
+    }
+  }
+  useEffect(() => {
+    console.log(singleHotel);
+    fetchHotel();
+  }, [id]);
+
+  const inDate = new Date(checkInDate).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+  const outDate = new Date(checkOutDate).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+
+  const totalGuest = () => {
+    let total = 0;
+    Object.entries(guest).forEach(([key, val]) => (total += val));
+    return total;
+  };
+
+  function handleHeader(){
+    navigate('/')
+  }
+
+  if (!singleHotel) {
+    return <div>Loading...</div>;
+  }
+
+  const { image, name, rating, price, address } = singleHotel;
+
   return (
-    <div className="payment-container">
-        {/* <h1>this is payment</h1> */}
-      <div className="confirm-details">
-        <span className="confirm-header">Confirm and Pay</span>
-      </div>
-      <div className="trip-details">
-        <div className="hotel-details">
-          <div className="hotel-view">
-            <img src={image} alt="hotel-image" width="95"height="95"/>
-          </div>
-          <div className="hotel-prop">
-            <span className="prop-name">{name}</span>
-            <span className="prop-rating">⭐ {rating}</span>
+    <>
+      <header className="payment-nav" onClick={handleHeader}>
+        RoamNRest
+      </header>
+      <div className="payment-container">
+        <div className="confirm-details">
+          <div className="trip-info">
+            <h2>Confirm and Pay</h2>
+            <span className="your-trip">Your Trip</span>
+
+            <div className="trip-date-container">
+              <span className="trip-prop-header">Dates</span>
+              <span className="info">
+                {inDate} - {outDate}
+              </span>
+            </div>
+
+            <div className="trip-guest-container">
+              <span className="trip-prop-header">Guests</span>
+              <span className="info">{totalGuest()} Guests</span>
+            </div>
+
+            <div className="payment-partner">
+              <h3>Pay with</h3>
+              <div className="razor-pay">Razorpay</div>
+              <button id="razor-btn">Confirm Booking</button>
+            </div>
           </div>
         </div>
-        <hr />
-        <div className="total-price-container">
-          <span className="charges">
-            ₹{price} x 2 nights
-          </span>
-          <span className="charges end">₹{price * 2}</span>
-          <span className="charges">Service fee</span>
-          <span className="charges end">₹200</span>
-          <hr className="divider" />
-          <span className="charges">Total</span>
-          <span className="charges end">{price * 2 + 200}</span>
+
+        <div className="trip-details">
+          <div className="hotel-payment-details">
+            <div className="hotel-view">
+              <img src={image} alt="hotel-image" />
+            </div>
+
+            <div className="hotel-prop">
+              <span className="prop-name">{name}</span>
+              <div className="address-rating">
+                <span className="prop-address">{address}</span>
+                <span className="prop-rating">⭐{rating}</span>
+              </div>
+            </div>
+          </div>
+          <hr className="hotel-divider" />
+
+          <div className="total-price-container">
+            <span className="total-charges">₹{price} x 2 nights</span>
+            <span className="total-charges end">₹{price * 2}</span>
+            <span className="total-charges">Service fee</span>
+            <span className="total-charges end">₹200</span>
+            <hr className="total-price-divider" />
+            <span className="total-charges">Total</span>
+            <span className="total-charges end">{price * 2 + 200}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
