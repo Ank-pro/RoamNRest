@@ -13,7 +13,7 @@ export const WishList = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar showMinimal={true}/>
       <section className="wishlist-hotels">
         {wishListHotels.length > 0
           ? wishListHotels.map((hotel) => (

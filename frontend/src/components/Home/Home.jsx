@@ -68,11 +68,11 @@ function Home() {
     
   }, [selectedCategory,filteredHotels]);
 
-  useEffect(() => {
-    dispatch(setDestination(null));
-    dispatch(setGuest({ adults: 1, childrens: 0, pets: 0 }));
-    dispatch(setDates({checkin : new Date(), checkout : null}))
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setDestination(null));
+  //   dispatch(setGuest({ adults: 1, childrens: 0, pets: 0 }));
+  //   // dispatch(setDates({checkin : new Date(), checkout : null}))
+  // }, []);
 
   return (
     <>

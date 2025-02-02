@@ -1,0 +1,86 @@
+.success-container {
+    
+    position: relative;
+    height: 100vh;
+  }
+  
+  .animation-container {
+    position: relative;
+  }
+  
+  .booking-text {
+    position: absolute;
+    /* top: 80%; */
+    left: 43%;
+    font-size: 2.5rem;
+    color: rgb(239, 145, 45);
+    font-weight: 600;
+    /* transform: translate(-20%, -20%); */
+    opacity: 0;
+    animation: textAnimation 5s ease 1s forwards;
+  }
+  
+  @keyframes textAnimation {
+    0% {
+      top: 34%;
+      opacity: 0;
+    }
+    100% {
+      top: 34%; /* Positioning it below the tick */
+      opacity: 1;
+      left: 43%;
+    }
+    
+  }
+  
+  .content {
+    top: 10%;
+    left: 35%;
+    position: absolute;
+    animation: fromBigToSmall 1s ease 1s forwards;
+  }
+  
+  @keyframes fromBigToSmall {
+    from {
+      transform: scale(0.85);
+      left: 35%;
+    }
+    to {
+      transform: scale(0.25);
+      left: 25%;
+    }
+  }
+  
+  .circle {
+    stroke-dasharray: 1194;
+    stroke-dashoffset: 1194;
+    animation: dc 1s ease-in-out;
+    animation-fill-mode: forwards;
+  }
+  
+  .tick {
+    stroke-dasharray: 350;
+    stroke-dashoffset: 350;
+    animation: dt 0.8s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.95s;
+  }
+  
+  @keyframes dc {
+    from {
+      stroke-dashoffset: 1194;
+    }
+    to {
+      stroke-dashoffset: 2388;
+    }
+  }
+  
+  @keyframes dt {
+    from {
+      stroke-dashoffset: 350;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  

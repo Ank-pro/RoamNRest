@@ -8,6 +8,7 @@ import { SearchComponent } from "./components/SearchComponent/SearchComponent";
 import { SearchedPage } from "./components/pages/searchedHotelPage/SearchedPage";
 import { WishList } from "./components/WishList/WishList";
 import { PaymentPage } from "./components/pages/PaymentPage/PaymentPage";
+import { SuccessPage } from "./components/Success/SuccessPage";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/hotels/:address" element={<SearchedPage/>}/>
         <Route path="/wishlist" element={<WishList/>}/>
         <Route path="/book/stay/:id" element={<PaymentPage/>}/>
+        <Route path="/success" element={<SuccessPage/>}/>
       </Routes>
       
     </>

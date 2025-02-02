@@ -16,8 +16,10 @@ import { Modal } from "../Portal/Modal";
 import { LoginPage } from "../LoginPage/LoginPage";
 import { SignInPage } from "../LoginPage/SignInPage";
 import { showAuthModal, showLogin, showSignUp } from "../../features/AuthSlice";
+import { UserModal } from "../UserModal/UserModal";
 
-export default function NavBar() {
+export default function NavBar({ showMinimal = false }) {
+  const [userModal, setUserModal] = useState(false);
   const {
     destinationModal,
     destination,
@@ -27,10 +29,10 @@ export default function NavBar() {
     checkOutDate,
     guest,
   } = useSelector((state) => state.search);
-  const {user} = useSelector(state => state.auth)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {login,signUp,authModal} = useSelector(state => state.auth);
+  const { login, signUp, authModal, user } = useSelector((state) => state.auth);
 
   function handleSearch() {
     dispatch(showSearchModal(true));
@@ -47,6 +49,9 @@ export default function NavBar() {
       dispatch(showSearchModal(false));
       dispatch(showGuestModal(false));
       dispatch(showDestinationModal(false));
+    });
+    document.addEventListener("click", () => {
+      setUserModal(false);
     });
   }, []);
 
@@ -70,12 +75,20 @@ export default function NavBar() {
     return total;
   };
 
-  function handleAuthModal() {
-    dispatch(showAuthModal(true));
+  function handleAuthModal(e) {
+    e.stopPropagation();
+    if (!user.token) {
+      dispatch(showAuthModal(true));
+    } else {
+      console.log("clicked");
+      setUserModal((prev) => !prev);
+    }
   }
-  function handleCloseModal(){
-    dispatch(showAuthModal(false)); 
+  function handleCloseModal() {
+    dispatch(showAuthModal(false));
   }
+
+  function handleUserModal() {}
 
   return (
     <>
@@ -84,31 +97,35 @@ export default function NavBar() {
           RoamNRest
         </div>
 
-        <div className="navlist" onClick={handleSearch}>
-          <li>{destination ? destination : "Anywhere"}</li>
-          <span></span>
-          <li>
-            {checkInDate && checkOutDate && checkInDate !== checkOutDate
-              ? dateDuration(checkInDate, checkOutDate)
-              : "Any week"}
-          </li>
-          <span></span>
-          <li>
-            {totalGuests() > 1 ? `${totalGuests()} Guests` : "Add Guests"}
-          </li>
+        {!showMinimal && (
+          <>
+            <div className="navlist" onClick={handleSearch}>
+              <li>{destination ? destination : "Anywhere"}</li>
+              <span></span>
+              <li>
+                {checkInDate && checkOutDate && checkInDate !== checkOutDate
+                  ? dateDuration(checkInDate, checkOutDate)
+                  : "Any week"}
+              </li>
+              <span></span>
+              <li>
+                {totalGuests() > 1 ? `${totalGuests()} Guests` : "Add Guests"}
+              </li>
 
-          <span></span>
-          <li>
-            <img src={searchImg} alt="search" height="25" width="25" />
-          </li>
-        </div>
+              <span></span>
+              <li>
+                <img src={searchImg} alt="search" height="25" width="25" />
+              </li>
+            </div>
 
-        <div className="user-section">
-          <p className="username">Hi,{user.name ? user.name : 'User'}</p>
-          <div className="user-icon" onClick={handleAuthModal}>
-            <img src={userImg} alt="user-image" />
-          </div>
-        </div>
+            <div className="user-section">
+              <p className="username">Hi, {user.name ? user.name : "User"}</p>
+              <div className="user-icon" onClick={handleAuthModal}>
+                <img src={userImg} alt="user-image" />
+              </div>
+            </div>
+          </>
+        )}
       </nav>
 
       {searchModal && (
@@ -122,9 +139,15 @@ export default function NavBar() {
         </>
       )}
 
-      {authModal && (
-        <Modal onClose={handleCloseModal}>
-          {login && <LoginPage/>}
+      {user.token ? (
+        userModal && (
+          <div className="user-m" onClick={handleUserModal}>
+            <UserModal />
+          </div>
+        )
+      ) : (
+        authModal && <Modal onClose={handleCloseModal}>
+          {login && <LoginPage />}
           {signUp && <SignInPage />}
         </Modal>
       )}

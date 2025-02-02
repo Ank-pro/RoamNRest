@@ -28,6 +28,7 @@ export const SearchComponent = () => {
 
   const checkInDateObj = checkInDate ? new Date(checkInDate) : null;
   const checkOutDateObj = checkOutDate ? new Date(checkOutDate) : null;
+
   const totalPets = pets > 0 ? `, ${pets} ${pets === 1 ? "pet" : "pets"}` : "";
   const totalChilds =
     childrens > 0
@@ -38,15 +39,25 @@ export const SearchComponent = () => {
   }${totalChilds}${totalPets}`;
 
   useEffect(() => {
-    console.log(checkInDateObj);
-  }, [checkInDate]);
+    console.log("checkinDate :", checkInDate);
+  }, []);
 
   function handleInDate(date) {
-    dispatch(setDates({ checkin: date, checkout: checkOutDateObj }));
+    dispatch(
+      setDates({
+        checkin: date.toISOString(),
+        checkout: checkOutDate,
+      })
+    );
   }
 
   function handleOutDate(date) {
-    dispatch(setDates({ checkin: checkInDateObj, checkout: date }));
+    dispatch(
+      setDates({
+        checkin: checkInDate,
+        checkout: date.toISOString(),
+      })
+    );
   }
 
   function handleDestination(e) {
@@ -67,18 +78,22 @@ export const SearchComponent = () => {
   function handleSearchedData() {
     try {
       dispatch(showSearchModal(false));
-      if (!checkOutDateObj && checkInDateObj) {
+      if (!checkOutDate && checkInDate) {
         dispatch(
-          setDates({ checkin: checkInDateObj, checkout: checkInDateObj })
+          setDates({
+            checkin: checkInDateObj.toISOString(),
+            checkout: new Date(
+              checkInDateObj.getTime() + 24 * 60 * 60 * 1000
+            ).toISOString(),
+          })
         );
       }
-      console.log(destination)
+      console.log(destination);
       dispatch(showDestinationModal(false));
       dispatch(showGuestModal(false));
-      if(destination){
-      navigate(`/hotels/${destination}`);
+      if (destination) {
+        navigate(`/hotels/${destination}`);
       }
-      
     } catch (error) {
       console.log("Cannot search empty : ", error);
     }
@@ -122,7 +137,9 @@ export const SearchComponent = () => {
           <label>Check-out</label>
           <DatePicker
             selected={checkOutDateObj}
-            minDate={checkInDateObj}
+            minDate={
+              new Date(new Date(checkInDate).getTime() + 24 * 60 * 60 * 1000)
+            }
             closeOnScroll={true}
             placeholderText="Set date"
             onChange={handleOutDate}

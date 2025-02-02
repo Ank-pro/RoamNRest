@@ -61,7 +61,7 @@ export const HotelPrice = ({ singleHotel }) => {
           <DatePicker
             selected={inDate}
             closeOnScroll={true}
-            minDate={new Date()}
+            minDate={inDate ? inDate : new Date()}
             onChange={handleCheckInChange}
             dateFormat="dd/MM/yyyy"
             className="date-input"
@@ -73,7 +73,7 @@ export const HotelPrice = ({ singleHotel }) => {
           <DatePicker
             selected={outDate}
             closeOnScroll={true}
-            minDate={inDate}
+            minDate={inDate ? new Date(inDate.getTime() + 24 * 60 * 60 * 1000) : new Date()}
             onChange={handleCheckOutChange}
             dateFormat="dd/MM/yyyy"
             className="date-input"

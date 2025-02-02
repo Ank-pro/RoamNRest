@@ -1,0 +1,13 @@
+.user-action{
+    /* background-color: rgb(14, 14, 14); */
+}
+
+.user-action-list{
+    list-style: none;
+}
+
+
+.wish,.logout{
+    padding: 10px;
+    cursor: pointer;
+}

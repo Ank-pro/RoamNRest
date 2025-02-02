@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showLogin, showSignUp } from "../../features/AuthSlice";
 
 export const Modal = ({ children, onClose }) => {
-  const { signUp, login, authModal } = useSelector((state) => state.auth);
+  const { signUp, login, authModal, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   function handleFormModal(type) {

@@ -112,3 +112,17 @@
         transform: translateY(0);
     }
 }
+
+/* user-modal */
+.user-m{
+    position: fixed;
+    top: 10%;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid rgb(18, 18, 18,0.25);
+    width: 11vw;
+    height: 15vh;   
+    right: 1.5%;
+    z-index: 1003;
+    background-color: rgb(255, 255, 255);
+}

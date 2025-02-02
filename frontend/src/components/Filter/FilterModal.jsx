@@ -58,7 +58,6 @@ export const FilterModal = () => {
           (guestHouse && propertyType === "Guest House") ||
           (flat && propertyType === "Flat"))
     );
-    console.log(hotels);
     setFilteredHotel(hotels);
   }, [value, rooms, property]);
 

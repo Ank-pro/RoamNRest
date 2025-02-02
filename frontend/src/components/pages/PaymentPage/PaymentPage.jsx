@@ -15,7 +15,6 @@ export const PaymentPage = () => {
     (state) => state.search
   );
 
-
   async function fetchHotel() {
     try {
       const { data } = await axios.get(`http://localhost:5000/api/hotel/${id}`);
@@ -45,8 +44,8 @@ export const PaymentPage = () => {
     return total;
   };
 
-  function handleHeader(){
-    navigate('/')
+  function handleHeader() {
+    navigate("/");
   }
 
   if (!singleHotel) {
@@ -57,9 +56,7 @@ export const PaymentPage = () => {
 
   return (
     <>
-      <header className="payment-nav" onClick={handleHeader}>
-        RoamNRest
-      </header>
+      <NavBar showMinimal={true} />
       <div className="payment-container">
         <div className="confirm-details">
           <div className="trip-info">

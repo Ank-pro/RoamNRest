@@ -41,7 +41,6 @@ export const HotelCard = ({ hotel }) => {
         dispatch(removeFromWishList(hotel));
       } else {
         dispatch(addToWishList({ ...hotel, favourite: true }));
-        navigate("/wishList");
       }
       dispatch(toggleFavourite(!isPresent));
     } else {
