@@ -8,17 +8,21 @@ import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { addHotels } from "../../features/HotelDataSlice";
 import { Spinner } from "./Spinner";
+import { Alert, Snackbar } from "@mui/material";
 import {
   setDates,
   setDestination,
   setGuest,
 } from "../../features/searchBarSlice";
+import { setOpenSnackBar } from "../../features/AuthSlice";
 
 function Home() {
   const [hotels, setHotels] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const {filteredHotels} = useSelector(state => state.home);
+  const { filteredHotels } = useSelector((state) => state.home);
+
+  const { openSnackBar } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const { selectedCategory, allHotels } = useSelector((state) => state.home);
@@ -56,17 +60,19 @@ function Home() {
   };
 
   useEffect(() => {
-    if(filteredHotels.length > 0){
-      const category_hotels = selectedCategory ? filteredHotels.filter(({category}) => category === selectedCategory) : filteredHotels;
-      setHotels(category_hotels.slice(0,8));
+    if (filteredHotels.length > 0) {
+      const category_hotels = selectedCategory
+        ? filteredHotels.filter(({ category }) => category === selectedCategory)
+        : filteredHotels;
+      setHotels(category_hotels.slice(0, 8));
       setHasMore(category_hotels.length > 8);
       setCurrentPage(8);
-      console.log('Category:',selectedCategory)
-    }else{
+      console.log("Category:", selectedCategory);
+    } else {
       fetchData();
     }
-    
-  }, [selectedCategory,filteredHotels]);
+    console.log("snack :", openSnackBar);
+  }, [selectedCategory, filteredHotels]);
 
   // useEffect(() => {
   //   dispatch(setDestination(null));
@@ -76,6 +82,19 @@ function Home() {
 
   return (
     <>
+      <Snackbar
+        open={openSnackBar.status}
+        autoHideDuration={2000}
+        onClose={() =>
+          dispatch(setOpenSnackBar({ type: openSnackBar.type, status: false }))
+        }
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        sx={{ borderRadius: "10px" }}
+      >
+        <Alert severity="success" variant="filled">
+          {`${openSnackBar.type === 'login' ? 'Login success' : 'Logout success'}`}
+        </Alert>
+      </Snackbar>
       <div className="container">
         <NavBar />
         <Categories />

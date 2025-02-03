@@ -44,15 +44,63 @@ export const PaymentPage = () => {
     return total;
   };
 
-  function handleHeader() {
-    navigate("/");
-  }
+  const loadScript = (source) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = source;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
 
   if (!singleHotel) {
     return <div>Loading...</div>;
   }
 
   const { image, name, rating, price, address } = singleHotel;
+  const totalAmountToBePaid = price * 2 + 200;
+
+  async function handleConfirmBooking() {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      console.log({ msg: "Error while loading SDK" });
+    }
+    const options = {
+      key: "rzp_test_QmLwAcpbdsqwX0",
+      amount: totalAmountToBePaid * 100,
+      currency: "INR",
+      name: "RoamNRest",
+      email: "ank@gmail.com",
+      contact: "9876543211",
+      description: "Thank you for booking with us",
+      handler: function (response) {
+        const stateData = {
+          amount: totalAmountToBePaid,
+          hotelName: name,
+          guests: totalGuest(),
+          checkIn: inDate,
+          checkOut: outDate,
+          bookingId: response.razorpay_payment_id,
+        };
+
+        navigate("/success", {
+          state: stateData,
+        });
+        console.log("State being passed:", stateData);
+      },
+      prefill: {
+        name: "Ankush Kushwaha",
+        email: "ank@gmail.com",
+        contact: "9876543211",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
 
   return (
     <>
@@ -78,7 +126,9 @@ export const PaymentPage = () => {
             <div className="payment-partner">
               <h3>Pay with</h3>
               <div className="razor-pay">Razorpay</div>
-              <button id="razor-btn">Confirm Booking</button>
+              <button id="razor-btn" onClick={handleConfirmBooking}>
+                Confirm Booking
+              </button>
             </div>
           </div>
         </div>
@@ -106,7 +156,7 @@ export const PaymentPage = () => {
             <span className="total-charges end">₹200</span>
             <hr className="total-price-divider" />
             <span className="total-charges">Total</span>
-            <span className="total-charges end">{price * 2 + 200}</span>
+            <span className="total-charges end">{totalAmountToBePaid}</span>
           </div>
         </div>
       </div>

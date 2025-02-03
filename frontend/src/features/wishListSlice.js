@@ -18,9 +18,13 @@ const WishListSlice = createSlice({
         },
         toggleFavourite : (state,action)=>{
             state.isFavourite = action.payload;
+        },
+        resetWishList : (state)=>{
+            state.isFavourite = false;
+            state.wishListHotels = [];
         }
     }
 })
 
-export const { addToWishList, removeFromWishList,toggleFavourite } = WishListSlice.actions;
+export const { addToWishList, removeFromWishList,toggleFavourite,resetWishList } = WishListSlice.actions;
 export default WishListSlice.reducer

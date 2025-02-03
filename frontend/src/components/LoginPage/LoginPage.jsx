@@ -7,29 +7,26 @@ import {
   showAuthModal,
   showLogin,
   showSignUp,
+  setOpenSnackBar,
 } from "../../features/AuthSlice";
 import axios from "axios";
 import { loginHandler } from "../../service/loginService";
 import { mobileValidate } from "../../utils/mobileRegex";
 import { passwordValidate } from "../../utils/passwordRegex";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 let isMobileValid, isPasswordValid;
 export const LoginPage = () => {
   const dispatch = useDispatch();
-  const { formValues, errors,user } = useSelector((state) => state.auth);
+  const { formValues, errors, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const [userError,setUserError] = useState("")
 
   async function handleUserLogin(e) {
     e.preventDefault();
-    // console.log(formValues);
     if (!formValues.mobileNumber || !formValues.password) {
-      console.log("All fields required");
+      setUserError("All fields required");
       return;
     }
     const res = await loginHandler(
@@ -37,24 +34,31 @@ export const LoginPage = () => {
       formValues.password
     );
     if (res?.status === 200) {
-      const {user : {name},token} = res.data;
-      // console.log(name,token)
-      dispatch(setUser({name,token}))
+      const {
+        user: { name },
+        token,
+      } = res.data;
+      dispatch(setOpenSnackBar({type : 'login',status : true}));
+      dispatch(setUser({ name, token }));
       setTimeout(() => {
         dispatch(showAuthModal(false));
+        
         navigate("/");
       }, 1000);
+    }else{
+      setUserError("Invalid mobile or password")
     }
   }
   function handleMobile(e) {
     let inputValue = e.target.value;
     dispatch(setFormValues({ mobileNumber: inputValue }));
+    setUserError("")
   }
 
   function handlePassword(e) {
     let inputValue = e.target.value;
-
     dispatch(setFormValues({ password: inputValue }));
+    setUserError("")
   }
 
   return (
@@ -85,12 +89,14 @@ export const LoginPage = () => {
             placeholder="Enter Your Passworkd"
             required
           />
+          {userError && <span className="invalid-user-msg">{userError}</span>}
         </div>
 
         <button id="user-login-action" onClick={handleUserLogin}>
           Login
         </button>
       </form>
+      
     </div>
   );
 };

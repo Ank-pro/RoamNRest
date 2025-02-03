@@ -16,17 +16,9 @@ export const HotelCard = ({ hotel }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
 
-  const { wishListHotels, isFavourite } = useSelector(
+  const { wishListHotels } = useSelector(
     (state) => state.wishList
   );
-
-  // if (hotel.length === 0) {
-  //   return <p>Loading...</p>;
-  // }
-  useEffect(() => {
-    // console.log(wishListHotels);
-    console.log('Access token: ',user.token);
-  }, [user.token]);
 
   const handleSingleHotel = () => {
     console.log(hotel);

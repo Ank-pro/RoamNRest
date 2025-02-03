@@ -41,10 +41,20 @@ const searchBarSlice = createSlice({
         },
         showSearchModal: (state, action) => {
             state.searchModal = action.payload;
+        },
+        resetSearchBar : (state)=>{
+            state.checkInDate = null;
+            state.checkOutDate = null;
+            state.guest = {
+                adults: 1,
+                childrens: 0,
+                pets: 0
+            };
+            state.destination = ""
         }
 
     }
 })
 
-export const { setDates, setDestination, setGuest, showDestinationModal, showSearchModal, showGuestModal } = searchBarSlice.actions;
+export const { setDates, setDestination, setGuest, showDestinationModal, showSearchModal, showGuestModal,resetSearchBar } = searchBarSlice.actions;
 export default searchBarSlice.reducer;

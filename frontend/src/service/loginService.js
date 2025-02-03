@@ -5,6 +5,6 @@ export const loginHandler = async (mobileNumber,password)=>{
         const res = await axios.post('http://localhost:5000/api/auth/login',{mobileNumber,password})
         return res;
     } catch (error) {
-        console.log(error.response.data)
+        return error.response.data;
     }
 }
