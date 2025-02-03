@@ -69,7 +69,7 @@ export const PaymentPage = () => {
       console.log({ msg: "Error while loading SDK" });
     }
     const options = {
-      key: "rzp_test_QmLwAcpbdsqwX0",
+      key: import.meta.env.VITE_RAZOR_API_KEY,
       amount: totalAmountToBePaid * 100,
       currency: "INR",
       name: "RoamNRest",
