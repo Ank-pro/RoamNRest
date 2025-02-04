@@ -43,16 +43,17 @@ function Home() {
   };
 
   const fetchMoreData = () => {
-    if (hotels.length > allHotels.length) {
+    const currHotels = filteredHotels.length > 0 ? filteredHotels : allHotels;
+    if (hotels.length > currHotels.length) {
       setHasMore(false);
       return;
     }
     setTimeout(() => {
       if (hotels.length > 0) {
-        const newHotels = allHotels.slice(currentPage, currentPage + 8);
+        const newHotels = currHotels.slice(currentPage, currentPage + 8);
         setHotels((prev) => [...prev, ...newHotels]);
         setCurrentPage((prev) => prev + 8);
-        if (currentPage + 8 >= allHotels.length) {
+        if (currentPage + 8 >= currHotels.length) {
           setHasMore(false);
         }
       }
@@ -64,21 +65,15 @@ function Home() {
       const category_hotels = selectedCategory
         ? filteredHotels.filter(({ category }) => category === selectedCategory)
         : filteredHotels;
-      setHotels(category_hotels.slice(0, 8));
+      console.log("Home Category :", category_hotels);
+      const initialHotels = category_hotels.slice(0, 8);
+      setHotels(initialHotels);
       setHasMore(category_hotels.length > 8);
       setCurrentPage(8);
-      console.log("Category:", selectedCategory);
     } else {
       fetchData();
     }
-    console.log("snack :", openSnackBar);
   }, [selectedCategory, filteredHotels]);
-
-  // useEffect(() => {
-  //   dispatch(setDestination(null));
-  //   dispatch(setGuest({ adults: 1, childrens: 0, pets: 0 }));
-  //   // dispatch(setDates({checkin : new Date(), checkout : null}))
-  // }, []);
 
   return (
     <>
@@ -92,7 +87,9 @@ function Home() {
         sx={{ borderRadius: "10px" }}
       >
         <Alert severity="success" variant="filled">
-          {`${openSnackBar.type === 'login' ? 'Login success' : 'Logout success'}`}
+          {`${
+            openSnackBar.type === "login" ? "Login success" : "Logout success"
+          }`}
         </Alert>
       </Snackbar>
       <div className="container">

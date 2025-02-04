@@ -16,6 +16,7 @@ export const UserModal = () => {
     dispatch(resetWishList());
     dispatch(resetSearchBar());
     dispatch(setOpenSnackBar({type : 'logout',status : true}))
+    localStorage.removeItem('user')
   }
   return (
     <div className="user-actions">

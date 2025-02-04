@@ -9,25 +9,53 @@ import {
 } from "../../features/wishListSlice";
 import { useEffect, useState } from "react";
 import { showAuthModal } from "../../features/AuthSlice";
+import {
+  setDates,
+  setDestination,
+  setGuest,
+} from "../../features/searchBarSlice";
 
 export const HotelCard = ({ hotel }) => {
   const { _id, name, city, address } = hotel;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  const {
+    checkInDate,
+    checkOutDate,
+    destination,
+    guest: { adults, childrens, pets },
+  } = useSelector((state) => state.search);
 
-  const { wishListHotels } = useSelector(
-    (state) => state.wishList
-  );
+  const { wishListHotels } = useSelector((state) => state.wishList);
 
   const handleSingleHotel = () => {
     console.log(hotel);
+    if (!checkInDate && !checkOutDate) {
+      let inDate = new Date();
+      let outDate = new Date(new Date(inDate).getTime() + 24 * 60 * 60 * 1000);
+      dispatch(setDates({ checkin: inDate, checkout: outDate }));
+    }
+    if (!destination) {
+      dispatch(setDestination(address));
+    }
+    if (adults + childrens + pets < 2) {
+      dispatch(
+        setGuest({
+          adults: 2,
+          childrens: 0,
+          pets: 0,
+        })
+      );
+    }
     navigate(`/hotel/${name}/${address}/${city}/${_id}/reserve`);
   };
 
   function handleWishList(e) {
     e.stopPropagation();
-    if (user.token) {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    console.log("USER : ", userData);
+    if (userData?.token) {
       let isPresent = wishListHotels.some((item) => item._id === hotel._id);
       if (isPresent) {
         dispatch(removeFromWishList(hotel));

@@ -50,3 +50,19 @@
 .content-container{
     padding: 0 1rem ;
 }
+
+.no-hotel{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.no-hotel span{
+    font-size: 2rem;
+    color: rgb(83, 84, 85);
+}
+
+.no-result{
+    height: 350px;
+    width: 450px;
+}

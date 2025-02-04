@@ -29,7 +29,7 @@ export const HotelDetails = ({ singleHotel }) => {
           <span className="dot"></span>
           <span className="rooms">{numberOfBeds} Bedrooms</span>
           <span className="dot"></span>
-          <span className="rooms">{numberOfBathrooms} Bathrooms</span>
+          <span className="rooms">{Math.floor(numberOfBathrooms)} Bathrooms</span>
         </div>
       </div>
 

@@ -44,6 +44,10 @@ export const PaymentPage = () => {
     return total;
   };
 
+  const totalNights = Math.ceil(
+    (new Date(checkOutDate) - new Date(checkInDate)) / 1000 / 60 / 60 / 24
+  );
+
   const loadScript = (source) => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -59,7 +63,7 @@ export const PaymentPage = () => {
   }
 
   const { image, name, rating, price, address } = singleHotel;
-  const totalAmountToBePaid = price * 2 + 200;
+  const totalAmountToBePaid = (price * totalNights) + 200;
 
   async function handleConfirmBooking() {
     const res = await loadScript(
@@ -73,8 +77,8 @@ export const PaymentPage = () => {
       amount: totalAmountToBePaid * 100,
       currency: "INR",
       name: "RoamNRest",
-      email: "ank@gmail.com",
-      contact: "9876543211",
+      email: "ank@test.com",
+      contact: "8888888888",
       description: "Thank you for booking with us",
       handler: function (response) {
         const stateData = {
@@ -93,8 +97,8 @@ export const PaymentPage = () => {
       },
       prefill: {
         name: "Ankush Kushwaha",
-        email: "ank@gmail.com",
-        contact: "9876543211",
+        email: "ank@test.com",
+        contact: "8888888888",
       },
     };
 
@@ -150,8 +154,8 @@ export const PaymentPage = () => {
           <hr className="hotel-divider" />
 
           <div className="total-price-container">
-            <span className="total-charges">₹{price} x 2 nights</span>
-            <span className="total-charges end">₹{price * 2}</span>
+            <span className="total-charges">₹{price} x {totalNights} nights</span>
+            <span className="total-charges end">₹{price * totalNights}</span>
             <span className="total-charges">Service fee</span>
             <span className="total-charges end">₹200</span>
             <hr className="total-price-divider" />

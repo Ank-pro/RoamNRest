@@ -38,8 +38,11 @@ export const LoginPage = () => {
         user: { name },
         token,
       } = res.data;
+      localStorage.setItem('user',JSON.stringify({name,token}))
+      const currentUser = JSON.stringify(localStorage.getItem('user'));
+      
       dispatch(setOpenSnackBar({type : 'login',status : true}));
-      dispatch(setUser({ name, token }));
+      dispatch(setUser(...currentUser));
       setTimeout(() => {
         dispatch(showAuthModal(false));
         

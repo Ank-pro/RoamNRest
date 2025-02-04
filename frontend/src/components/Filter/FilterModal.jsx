@@ -14,91 +14,21 @@ import {
 } from "../../features/HotelDataSlice";
 import {} from "../../features/HotelDataSlice";
 
-export const FilterModal = () => {
-  const [value, setValue] = useState([850, 20000]);
-  const { allHotels, filterModal } = useSelector((state) => state.home);
-  const dispatch = useDispatch();
-  const [filteredHotel, setFilteredHotel] = useState([]);
-  const [rooms, setRooms] = useState({
-    beds: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-  });
-  const [property, setProperty] = useState({
-    house: false,
-    flat: false,
-    hotel: false,
-    guestHouse: false,
-  });
-
+export const FilterModal = ({
+  handleClear,
+  handleDown,
+  handleUp,
+  handleProperty,
+  handleFiltered,
+  filteredHotel,
+  rooms,
+  property,
+  value,
+  setValue
+}) => {
   const { beds, bedrooms, bathrooms } = rooms;
   const { house, flat, hotel, guestHouse } = property;
-
-  useEffect(() => {
-    setFilteredHotel(allHotels);
-  }, [allHotels]);
-
-  useEffect(() => {
-    const hotels = allHotels.filter(
-      ({
-        price,
-        numberOfBathrooms,
-        numberOfBedrooms,
-        numberOfBeds,
-        propertyType,
-      }) =>
-        price >= value[0] &&
-        price <= value[1] &&
-        (bathrooms === 0 || numberOfBathrooms >= bathrooms) &&
-        (bedrooms === 0 || numberOfBedrooms >= bedrooms) &&
-        (bedrooms === 0 || numberOfBeds >= beds) &&
-        ((!house && !flat && !guestHouse && !hotel) ||
-          (house && propertyType === "House") ||
-          (hotel && propertyType === "Hotel") ||
-          (guestHouse && propertyType === "Guest House") ||
-          (flat && propertyType === "Flat"))
-    );
-    setFilteredHotel(hotels);
-  }, [value, rooms, property]);
-
-  function handleUp(type) {
-    setRooms((prev) => {
-      return { ...prev, [type]: prev[type] + 1 };
-    });
-  }
-
-  function handleDown(type) {
-    setRooms((prev) => {
-      return { ...prev, [type]: prev[type] > 0 ? prev[type] - 1 : 0 };
-    });
-  }
-
-  function handleProperty(type) {
-    setProperty((prev) => {
-      return { ...prev, [type]: !prev[type] };
-    });
-  }
-
-  function handleClear() {
-    setFilteredHotel([]);
-    setRooms({
-      beds: 0,
-      bedrooms: 0,
-      bathrooms: 0,
-    });
-    setValue([850, 20000]);
-    setProperty({
-      house: false,
-      flat: false,
-      hotel: false,
-      guestHouse: false,
-    });
-  }
-
-  function handleFiltered() {
-    dispatch(setFilteredHotels(filteredHotel));
-    dispatch(showFilterModal(false));
-  }
+  const dispatch = useDispatch();
 
   return (
     <div className="filtering">

@@ -11,3 +11,7 @@
     padding: 10px;
     cursor: pointer;
 }
+
+.wish:hover,.logout:hover{
+    background-color: rgb(238, 240, 241,0.5);
+}

@@ -8,10 +8,10 @@ export const signUpHandler = async(mobileNumber,name,email,password)=>{
             email,
             password
         });
-        // console.log(data);
+        console.log(data);
         return data;
     } catch (error) {
-        console.log(error.response.data)
+        return error.response?.data || { message: "Something went wrong" };
     }
 }
 

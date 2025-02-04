@@ -70,6 +70,13 @@
 
 #user-login-action{
     padding: 10px;
+    background-color: rgba(210, 97, 193, 0.90);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+#user-login-action:hover{
+  background-color: rgba(210, 97, 193);
 }
 
 /* Signup */
@@ -96,6 +103,14 @@
 
 .sign-btn{
     padding: 10px;
+    background-color: rgba(210, 97, 193, 0.90);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.sign-btn:hover{
+  background-color: rgba(210, 97, 193);
 }
 
 

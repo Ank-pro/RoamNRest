@@ -5,6 +5,7 @@ const initialState = {
     selectedCategory: "National Parks",
     categories : [],
     filteredHotels : [],
+    searchedFilterHotels : [],
     singleHotel : null,
     filterModal : false,
 }
@@ -30,9 +31,12 @@ const HotelDataSlice = createSlice({
         },
         setFilteredHotels : (state,action)=>{
             state.filteredHotels = action.payload;
+        },
+        setSearchedFilterHotels : (state,action)=>{
+            state.searchedFilterHotels = action.payload
         }
     }
 })
 
-export const {addHotels,onSelectCategory,setCategories,setSingleHotel,showFilterModal,setFilteredHotels} = HotelDataSlice.actions;
+export const {addHotels,onSelectCategory,setCategories,setSingleHotel,showFilterModal,setFilteredHotels,setSearchedFilterHotels} = HotelDataSlice.actions;
 export default HotelDataSlice.reducer;

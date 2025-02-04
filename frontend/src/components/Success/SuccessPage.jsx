@@ -1,17 +1,20 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BookedAnimation } from "./BookedAnimation";
 import { useLocation, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import successAnimation from "./success.json";
+import { resetSearchBar } from "../../features/searchBarSlice";
 
 export const SuccessPage = () => {
   const location = useLocation();
   const orderDetails = location.state;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   console.log("order-details", orderDetails);
 
   function handleHomeRedirect(){
+    dispatch(resetSearchBar());
     navigate('/')
   }
 

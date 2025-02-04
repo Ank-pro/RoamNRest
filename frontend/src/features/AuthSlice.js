@@ -51,6 +51,14 @@ const AuthSlice = createSlice({
         },
         resetAuth: (state) => {
             state.authModal = false
+            state.errors = {};
+            state.user = {
+                name: '',
+                token: ''
+            }
+            localStorage.removeItem('user')
+        },
+        resetForm : (state)=>{
             state.formValues = {
                 mobileNumber: "",
                 name: "",
@@ -58,14 +66,9 @@ const AuthSlice = createSlice({
                 password: "",
                 confirmPassword: ""
             }
-            state.errors = {};
-            state.user = {
-                name: '',
-                token: ''
-            }
         }
     }
 });
 
-export const { showLogin, showSignUp, showAuthModal, setFormValues, setUser, setOpenSnackBar, setErrors, resetAuth } = AuthSlice.actions;
+export const { showLogin, showSignUp, showAuthModal, setFormValues, setUser, setOpenSnackBar, setErrors,resetAuth, resetForm } = AuthSlice.actions;
 export default AuthSlice.reducer;

@@ -7,6 +7,7 @@ import { GuestSelect } from "../SearchComponent/guest-select/GuestSelect";
 import { DestinationSelect } from "../SearchComponent/dest-select/DestinationSelect";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetSearchBar,
   showDestinationModal,
   showGuestModal,
   showSearchModal,
@@ -17,6 +18,7 @@ import { LoginPage } from "../LoginPage/LoginPage";
 import { SignInPage } from "../LoginPage/SignInPage";
 import { showAuthModal, showLogin, showSignUp } from "../../features/AuthSlice";
 import { UserModal } from "../UserModal/UserModal";
+
 
 export default function NavBar({ showMinimal = false }) {
   const [userModal, setUserModal] = useState(false);
@@ -33,6 +35,7 @@ export default function NavBar({ showMinimal = false }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { login, signUp, authModal, user } = useSelector((state) => state.auth);
+  const currentUser = JSON.parse(localStorage.getItem('user'))
 
   function handleSearch() {
     dispatch(showSearchModal(true));
@@ -77,23 +80,27 @@ export default function NavBar({ showMinimal = false }) {
 
   function handleAuthModal(e) {
     e.stopPropagation();
-    if (!user.token) {
+    console.log("User ", currentUser);
+    if (!currentUser?.token) {
       dispatch(showAuthModal(true));
     } else {
-      console.log("clicked");
+      
       setUserModal((prev) => !prev);
     }
   }
   function handleCloseModal() {
     dispatch(showAuthModal(false));
   }
+  function handleResetToHome(){
+    dispatch(resetSearchBar());
+    navigate('/');
+  }
 
-  function handleUserModal() {}
 
   return (
     <>
       <nav className="navbar">
-        <div className="heading" onClick={() => navigate("/")}>
+        <div className="heading" onClick={handleResetToHome}>
           RoamNRest
         </div>
 
@@ -119,7 +126,7 @@ export default function NavBar({ showMinimal = false }) {
             </div>
 
             <div className="user-section">
-              <p className="username">Hi, {user.name ? user.name : "User"}</p>
+              <p className="username">Hi, {currentUser?.name ? currentUser.name : "User"}</p>
               <div className="user-icon" onClick={handleAuthModal}>
                 <img src={userImg} alt="user-image" />
               </div>
@@ -139,9 +146,9 @@ export default function NavBar({ showMinimal = false }) {
         </>
       )}
 
-      {user.token ? (
+      {currentUser?.token ? (
         userModal && (
-          <div className="user-m" onClick={handleUserModal}>
+          <div className="user-m">
             <UserModal />
           </div>
         )

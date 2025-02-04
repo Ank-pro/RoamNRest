@@ -5,12 +5,8 @@ import "./filter.css";
 const RangeComponent = ({ value, setValue }) => {
   //   const [value, setValue] = useState([850, 20000]);
   const minPrice = 850;
-  const maxPrice = 20000;
+  const maxPrice = 25000;
   const steps = 10;
-
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
